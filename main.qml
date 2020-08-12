@@ -37,7 +37,7 @@ Window {
             id: origRectangle
             Layout.fillHeight: true
             Layout.fillWidth: true
-            radius: 30
+            radius: 20
 
             color: "#1399fd"
 
@@ -45,28 +45,43 @@ Window {
                 id: origColumnLayout
                 anchors.fill: parent
                 anchors.margins: 10
-                spacing: 10
+                spacing: 20
                 Label {
                     id: origLabel
                     font.bold: true
                     color: "#eff0f1"
 
                     font.pixelSize: (origRectangle.width) >> 4
+                    Layout.fillHeight: true
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
                     text: "Original Image"
-
                 }
 
                 Image {
                     Layout.fillWidth: true
-
                     verticalAlignment: Image.AlignTop
                     fillMode: Image.PreserveAspectFit
                     source: "assets/images/placeholder.png"
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    Layout.fillHeight: true
 
                 }
+
+                Button {
+                    id: loadButton
+                    Layout.fillWidth: true
+                    text: "LOAD"
+                    Layout.fillHeight: true
+                }
+
+                Button {
+                    Layout.fillWidth: true
+                    text: "SAVE IMAGE"
+                    Layout.fillHeight: true
+                }
+
+
             }
         }
 
