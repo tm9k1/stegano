@@ -2,7 +2,7 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
-import QtGraphicalEffects 1.12
+import QtQuick.Dialogs 1.3
 
 Window {
     id: mainWindow
@@ -11,7 +11,7 @@ Window {
     property int startHeight: 720
 
     height: mainWindow.startHeight
-//    width: mainWindow.startHeight * mainWindow.aspectRatio
+    //    width: mainWindow.startHeight * mainWindow.aspectRatio
     width: 1280
     minimumHeight: 480
     minimumWidth: mainWindow.minimumHeight * mainWindow.aspectRatio
@@ -59,6 +59,7 @@ Window {
                 }
 
                 Image {
+                    id: image
                     Layout.fillWidth: true
                     verticalAlignment: Image.AlignTop
                     fillMode: Image.PreserveAspectFit
@@ -73,12 +74,42 @@ Window {
                     Layout.fillWidth: true
                     text: "LOAD"
                     Layout.fillHeight: true
+                    onClicked: {
+                        openFileDialog.open();
+                    }
                 }
 
                 Button {
+                    id: saveButton
                     Layout.fillWidth: true
                     text: "SAVE IMAGE"
                     Layout.fillHeight: true
+                    onClicked: {
+                        saveFileDialog.open();
+                    }
+                }
+
+                FileDialog {
+                    id: openFileDialog
+                    title: "Open an image"
+                    folder: shortcuts.desktop
+                    nameFilters: [ "Image files (*.jpg *.png *.bmp)", "All files (*)" ]
+
+                    onAccepted: {
+                        image.source = openFileDialog.fileUrl
+                    }
+                }
+
+                FileDialog {
+                    id: saveFileDialog
+                    title: "Save the tmage"
+                    folder: shortcuts.desktop
+                    nameFilters: [ "Image files (*.jpg *.png *.bmp)", "All files (*)" ]
+                    selectExisting: false
+                    onAccepted: {
+
+//                        fun(saveFileDialog.fileUrl);
+                    }
                 }
 
 
