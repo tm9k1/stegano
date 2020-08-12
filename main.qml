@@ -7,6 +7,10 @@ Window {
     height: 720
     visible: true
     title: qsTr("Hello World")
+    Component.onCompleted: {
+        setX(screen.width/2 - mainWindow.width/2)
+        setY(screen.height/2 - mainWindow.height/2)
+    }
 
 Item {
     focus:true
