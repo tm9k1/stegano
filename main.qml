@@ -11,7 +11,8 @@ Window {
     property int startHeight: 720
 
     height: mainWindow.startHeight
-    width: mainWindow.startHeight * mainWindow.aspectRatio
+//    width: mainWindow.startHeight * mainWindow.aspectRatio
+    width: 1280
     minimumHeight: 480
     minimumWidth: mainWindow.minimumHeight * mainWindow.aspectRatio
     maximumHeight: 1080
@@ -43,6 +44,29 @@ Window {
             ColumnLayout {
                 id: origColumnLayout
                 anchors.fill: parent
+                anchors.margins: 10
+                spacing: 10
+                Label {
+                    id: origLabel
+                    font.bold: true
+                    color: "#eff0f1"
+
+                    font.pixelSize: (origRectangle.width) >> 4
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                    text: "Original Image"
+
+                }
+
+                Image {
+                    Layout.fillWidth: true
+
+                    verticalAlignment: Image.AlignTop
+                    fillMode: Image.PreserveAspectFit
+                    source: "assets/images/placeholder.png"
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+
+                }
             }
         }
 
@@ -71,7 +95,7 @@ Window {
 
         Label {
             font.bold: true
-            font.pixelSize: 50
+            font.pixelSize: (origRectangle.width) >> 3
             text: "="
             color: "#eff0f1"
 
