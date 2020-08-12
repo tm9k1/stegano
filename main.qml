@@ -6,14 +6,20 @@ import QtGraphicalEffects 1.12
 
 Window {
     id: mainWindow
+
+    property double aspectRatio: (screen.width / screen.height)
+    property int startHeight: 720
+
+    height: mainWindow.startHeight
+    width: mainWindow.startHeight * mainWindow.aspectRatio
     minimumHeight: 480
-    minimumWidth: 640
-    width: 1280
-    height: 720
+    minimumWidth: mainWindow.minimumHeight * mainWindow.aspectRatio
     maximumHeight: 1080
-    maximumWidth: 1920
+    maximumWidth: mainWindow.maximumHeight * mainWindow.aspectRatio
+
     visible: true
     title: qsTr("Hello World")
+
     Component.onCompleted: {
         setX(screen.width/2 - mainWindow.width/2)
         setY(screen.height/2 - mainWindow.height/2)
@@ -42,7 +48,7 @@ Window {
 
         Label {
             font.bold: true
-            font.pixelSize: 50
+            font.pixelSize: (origRectangle.width) >> 3
             text: "+"
             color: "#eff0f1"
 
