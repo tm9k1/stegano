@@ -2,7 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>assets/images/placeholder.png</file>
-        <file>assets/fonts/product-sans-reg.ttf</file>
         <file>assets/fonts/sf-pro-text-regular.otf</file>
+        <file>assets/components/ImageUI.qml</file>
     </qresource>
 </RCC>
