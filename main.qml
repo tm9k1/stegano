@@ -127,22 +127,16 @@ Window {
 
                 ToolTip.text: "Number of bits to use for the process (1- poor payload quality, 2, 3- best payload quality)"
 
-                onFocusChanged: {
-                    if (focus == Qt.NoFocus) {
-                        bitCountTextField.ToolTip.visible = false;
-                    } else {
-                        bitCountTextField.ToolTip.visible = true;
-                    }
-                }
+                onFocusChanged: bitCountTextField.ToolTip.visible = (focus != Qt.NoFocus)
 
                 onTextEdited: {
-                    bitCountBackgroundRectangle.color = "#88000000";
-                    bitCountTextField.ToolTip.visible = true;
-                }
-
-                onAccepted: {
-                    bitCountBackgroundRectangle.color = "#8800cc00";
-                    bitCountTextField.ToolTip.visible = false;
+                    if (bitCountTextField.acceptableInput) {
+                        bitCountBackgroundRectangle.color = "#8800cc00";
+                        bitCountTextField.ToolTip.visible = false;
+                    } else {
+                        bitCountBackgroundRectangle.color = "#88000000";
+                        bitCountTextField.ToolTip.visible = true;
+                    }
                 }
             }
 
