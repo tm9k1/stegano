@@ -13,14 +13,18 @@ Item {
         property int roundRadius: 5
 
         anchors.fill: parent
-
-        Image {
-            id: image
+        Rectangle {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            clip:  true
-            source: "../images/placeholder.png"
-            fillMode: Image.PreserveAspectCrop
+
+            Image {
+                id: image
+                anchors.fill: parent
+                clip: true
+                source: "../images/placeholder.png"
+                //                opacity: 0
+                fillMode: Image.PreserveAspectCrop
+            }
 
             MouseArea {
                 id: loadImageMouseArea
@@ -29,17 +33,14 @@ Item {
 
                 Rectangle {
                     id: loadOverLayRectangle
-                    property var baseColor: "#4d4d4d"
                     anchors.fill: parent
-                    color: loadOverLayRectangle.baseColor
+                    color: "#4d4d4d"
+                    opacity: 0.8
                 }
 
                 RoundButton {
                     id: loadButton
                     anchors.centerIn: parent
-
-                    opacity: 0.8
-                    visible: false
 
                     font.underline: true
                     font.bold: true
@@ -51,26 +52,38 @@ Item {
                     }
                 }
 
+                RoundButton {
+                    id: resetButton
+                    width: loadButton.width / 2
+                    height: loadButton.height / 2
+                    anchors.verticalCenter: loadButton.verticalCenter
+                    anchors.left: loadButton.right
+                    anchors.leftMargin: resetButton.font.pixelSize
+
+                    font.bold: true
+                    font.pixelSize: Math.max(loadButton.font.pixelSize / 2 , 12)
+                    text: "\u2205"
+
+                    onClicked: image.source = "../images/placeholder.png"
+                }
+
                 FileDialog {
                     id: openFileDialog
                     title: "Open an image"
                     folder: shortcuts.desktop
                     nameFilters: [ "Image files (*.jpg *.png *.bmp)", "All files (*)" ]
 
-                    onAccepted: {
-                        if (openFileDialog.fileUrl) {
-                            loadOverLayRectangle.baseColor = "#55000000";
-                            image.source = openFileDialog.fileUrl
-                        }
-                    }
+                    onAccepted: image.source = openFileDialog.fileUrl
                 }
             }
 
             Label {
                 id: headerLabel
                 anchors.top: parent.top
+                anchors.topMargin: headerLabel.font.pixelSize / 4
                 anchors.horizontalCenter: parent.horizontalCenter
 
+                font.underline: true
                 font.family: sanFransicoPro.name
                 color: "#eff0f1"
                 font.pixelSize: 18
@@ -86,11 +99,11 @@ Item {
                 RoundButton {
                     id: saveButton
 
-                    Layout.bottomMargin: saveButton.height >> 1
+                    Layout.bottomMargin: saveButton.height / 2
                     radius: columnLayout.roundRadius
 
                     font.family: sanFransicoPro.name
-                    font.pixelSize: headerLabel.font.pixelSize >> 1
+                    font.pixelSize: headerLabel.font.pixelSize / 2
                     text: "Save Image"
 
                     onClicked: saveFileDialog.open()
@@ -103,7 +116,7 @@ Item {
                     nameFilters: [ "Image files (*.jpg *.png *.bmp)", "All files (*)" ]
                     selectExisting: false
                     onAccepted: {
-                        //                        fun(saveFileDialog.fileUrl);
+                        // fun(saveFileDialog.fileUrl);
                     }
                 }
             }
@@ -116,19 +129,16 @@ Item {
             when: loadImageMouseArea.containsMouse
 
             PropertyChanges {
-                target: loadButton
-                visible: true
+                target: loadOverLayRectangle
+                opacity: 0.7
             }
 
-            PropertyChanges {
-                target: loadOverLayRectangle
-                opacity: 0.5
-            }
-        },
-        State {
-            name: "reveal"
-            // SET when: TO THE POINT WHEN WE HAVE A GOOD RESULT -- SIGNAL COMES FROM C++
         }
+        //        ,
+        //        State {
+        //            name: "reveal"
+        //            // SET when: TO THE POINT WHEN WE HAVE A GOOD RESULT -- SIGNAL COMES FROM C++
+        //        }
 
     ]
 
@@ -141,8 +151,8 @@ Item {
                 NumberAnimation {
                     target: loadOverLayRectangle
                     properties: "opacity"
-                    easing.type: Easing.InOutQuad
                     duration: 200
+                    easing.type: Easing.InOutQuad
                 }
             }
         }
