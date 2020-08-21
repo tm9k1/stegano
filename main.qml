@@ -2,6 +2,8 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 1.4
+import QtQuick.Controls 2.15
+
 import "assets/components/"
 
 Window {
@@ -96,27 +98,31 @@ Window {
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignCenter
             Layout.margins: origImageUI.titleSize / 4
+
             columns: mainWindow.isLandscapeMode ? 1 : 2
             rows: mainWindow.isLandscapeMode ? 2 : 1
 
-            Label {
+            Button {
                 id: backwardLabel
+                opacity: 0.8
+                flat: true
                 font.bold: true
                 font.pixelSize: origImageUI.titleSize * 2
-                color: "#eff0f1"
-                text: mainWindow.isLandscapeMode ? "\u21e6" : "\u21e7"
+
+                text: "<font color='#eff0f1'>" + (mainWindow.isLandscapeMode ? "\u21e6" : "\u21e7") + "</font>"
+//                onClicked: imageProc.doStuff();
             }
 
-            Label {
+            Button {
                 id: forwardLabel
-
+                opacity: 0.7
+                flat: true
                 font.bold: true
                 font.pixelSize: origImageUI.titleSize * 2
-                color: "#eff0f1"
-                text: mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9"
+
+                text: "<font color='#eff0f1'>" + (mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9") + "</font"
+//                onClicked: imageProc.doStuff();
             }
-
-
         }
 
 
