@@ -9,10 +9,10 @@ Window {
 
     property double aspectRatio: (screen.width / screen.height)
     property int startHeight: (screen.height / 2)
-
+    property bool isLandscapeMode: (mainWindow.width > mainWindow.height)
     // FOR TESTING ONLY
     height: 720
-    width: 1280
+    width: 360
 
     //    height: mainWindow.startHeight // 100%
     //    width: mainWindow.startHeight * mainWindow.aspectRatio
@@ -53,8 +53,8 @@ Window {
         anchors.margins: 10
         anchors.fill: parent
         focus: true
-        columns: (mainWindow.width / mainWindow.height >=1) ? 5 : 1
-        rows: (mainWindow.width / mainWindow.height >=1) ? 1 : 5
+        columns: mainWindow.isLandscapeMode ? 5 : 1
+        rows: mainWindow.isLandscapeMode ? 1 : 5
 
         property int titleSize: Math.min(origImageUI.width, origImageUI.height) / Math.max(origImageUI.title.length, payloadImageUI.title.length, resultImageUI.title.length)
 
@@ -85,17 +85,40 @@ Window {
             Layout.fillHeight: true
             title: "Payload Image"
             titleSize: origImageUI.titleSize
+
+            imageSource: imageProc.payloadImageUrl
+            onLoadRequestedFile: imageProc.payloadImageUrl = url
         }
 
-        Label {
-            id: equalLabel
+        GridLayout {
+            id: flowGridLayout
+            Layout.fillWidth: true
+            Layout.fillHeight: true
             Layout.alignment: Qt.AlignCenter
+            Layout.margins: origImageUI.titleSize / 2
+            columns: mainWindow.isLandscapeMode ? 1 : 2
+            rows: mainWindow.isLandscapeMode ? 2 : 1
 
-            font.bold: true
-            font.pixelSize: origImageUI.titleSize
-            color: "#eff0f1"
-            text: "="
+            Label {
+                id: backwardLabel
+                font.bold: true
+                font.pixelSize: origImageUI.titleSize * 2
+                color: "#eff0f1"
+                text: mainWindow.isLandscapeMode ? "\u21e6" : "\u21e7"
+            }
+
+            Label {
+                id: forwardLabel
+
+                font.bold: true
+                font.pixelSize: origImageUI.titleSize * 2
+                color: "#eff0f1"
+                text: mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9"
+            }
+
+
         }
+
 
         ImageUI {
             id: resultImageUI
@@ -103,10 +126,13 @@ Window {
             Layout.fillHeight: true
             title: "Result"
             titleSize: origImageUI.titleSize
+
+            imageSource: imageProc.resultImageUrl
+            onLoadRequestedFile: imageProc.resultImageUrl = url
         }
 
         Keys.onPressed: {
-            if (event.key == Qt.Key_Escape) {
+            if (event.key === Qt.Key_Escape) {
                 mainWindow.close();
                 event.accepted = true;
             }
@@ -123,6 +149,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.6600000262260437}
+    D{i:0;formeditorZoom:1.5}
 }
 ##^##*/
