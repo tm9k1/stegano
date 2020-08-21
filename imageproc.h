@@ -10,25 +10,18 @@ class ImageProc : public QObject
 
     Q_PROPERTY(QUrl originalImageUrl
                MEMBER m_originalImageUrl
-               RESET resetOriginalImageUrl
                NOTIFY originalImageUrlChanged)
 
     Q_PROPERTY(QUrl payloadImageUrl
                MEMBER m_payloadImageUrl
-               RESET resetPayloadImageUrl
                NOTIFY payloadImageUrlChanged)
 
     Q_PROPERTY(QUrl resultImageUrl
                MEMBER m_resultImageUrl
-               RESET resetResultImageUrl
                NOTIFY resultImageUrlChanged)
 
 public:
     explicit ImageProc(QObject *parent = nullptr);
-
-    void resetOriginalImageUrl();
-    void resetPayloadImageUrl();
-    void resetResultImageUrl();
 
 signals:
     void originalImageUrlChanged();
