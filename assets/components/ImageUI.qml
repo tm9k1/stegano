@@ -22,7 +22,6 @@ Item {
                 anchors.fill: parent
                 clip: true
                 source: "../images/placeholder.png"
-                //                opacity: 0
                 fillMode: Image.PreserveAspectCrop
             }
 
