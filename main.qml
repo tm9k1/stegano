@@ -12,7 +12,7 @@ Window {
     property bool isLandscapeMode: (mainWindow.width > mainWindow.height)
     // FOR TESTING ONLY
     height: 720
-    width: 360
+    width: 1280
 
     //    height: mainWindow.startHeight // 100%
     //    width: mainWindow.startHeight * mainWindow.aspectRatio
@@ -95,7 +95,7 @@ Window {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignCenter
-            Layout.margins: origImageUI.titleSize / 2
+            Layout.margins: origImageUI.titleSize / 4
             columns: mainWindow.isLandscapeMode ? 1 : 2
             rows: mainWindow.isLandscapeMode ? 2 : 1
 
