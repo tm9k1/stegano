@@ -9,7 +9,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
-
+    app.setOrganizationName("Piyush");
+    app.setOrganizationDomain("Aggarwal");
     // create custom QObjects before engine so engine can destroy correctly
     ImageProc i;
 
