@@ -97,10 +97,9 @@ Window {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignCenter
-            Layout.margins: origImageUI.titleSize / 4
 
-            columns: mainWindow.isLandscapeMode ? 1 : 2
-            rows: mainWindow.isLandscapeMode ? 2 : 1
+            columns: mainWindow.isLandscapeMode ? 1 : 3
+            rows: mainWindow.isLandscapeMode ? 3 : 1
 
             Button {
                 id: backwardLabel
@@ -110,7 +109,47 @@ Window {
                 font.pixelSize: origImageUI.titleSize * 2
 
                 text: "<font color='#eff0f1'>" + (mainWindow.isLandscapeMode ? "\u21e6" : "\u21e7") + "</font>"
-//                onClicked: imageProc.doStuff();
+                //                onClicked: imageProc.doStuff();
+            }
+
+            TextField {
+                id: bitCountTextField
+
+                Layout.preferredWidth: backwardLabel.width
+                horizontalAlignment: TextInput.AlignHCenter
+                background: Item {
+                    Rectangle {
+                        id: bitCountBackgroundRectangle
+                        anchors.fill: parent
+                        color:  "#88000000"
+                    }
+                }
+
+                validator: IntValidator { bottom: 1 ; top: 3 }
+
+                font.bold: true
+                color: "#eff0f1"
+                placeholderText: "<b>Bits (1/2/3)</b>"
+
+                ToolTip.text: "Number of bits to use for the process (1- poor payload quality, 2, 3- best payload quality)"
+
+                onFocusChanged: {
+                    if (focus == Qt.NoFocus) {
+                        bitCountTextField.ToolTip.visible = false;
+                    } else {
+                        bitCountTextField.ToolTip.visible = true;
+                    }
+                }
+
+                onTextEdited: {
+                    bitCountBackgroundRectangle.color = "#88000000";
+                    bitCountTextField.ToolTip.visible = true;
+                }
+
+                onAccepted: {
+                    bitCountBackgroundRectangle.color = "#8800cc00";
+                    bitCountTextField.ToolTip.visible = false;
+                }
             }
 
             Button {
@@ -121,7 +160,7 @@ Window {
                 font.pixelSize: origImageUI.titleSize * 2
 
                 text: "<font color='#eff0f1'>" + (mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9") + "</font"
-//                onClicked: imageProc.doStuff();
+                //                onClicked: imageProc.doStuff();
             }
         }
 
