@@ -8,7 +8,6 @@ Item {
     property alias title: headerLabel.text
     property alias titleSize: headerLabel.font.pixelSize
     property alias imageSource: image.source
-    signal loadRequestedFile(var url)
 
     ColumnLayout {
         id: columnLayout
@@ -56,7 +55,7 @@ Item {
                         folder: shortcuts.desktop
                         nameFilters: [ "Image files (*.jpg *.png *.bmp)", "All files (*)" ]
 
-                        onAccepted: container.loadRequestedFile(loadImageDialog.fileUrl)
+                        onAccepted: image.source = loadImageDialog.fileUrl
                     }
 
                 }
@@ -73,7 +72,7 @@ Item {
                     font.pixelSize: Math.max(loadImageButton.font.pixelSize / 2 , 12)
                     text: "\u2205"
 
-                    onClicked: container.loadRequestedFile(undefined)
+                    onClicked: image.source = "../images/placeholder"
                 }
 
             }

@@ -66,9 +66,6 @@ Window {
             Layout.fillHeight: true
             title: "Original Image"
             titleSize: mainGridLayout.titleSize
-
-            imageSource: imageProc.originalImageUrl
-            onLoadRequestedFile: imageProc.originalImageUrl = url
         }
 
         Label {
@@ -87,9 +84,6 @@ Window {
             Layout.fillHeight: true
             title: "Payload Image"
             titleSize: origImageUI.titleSize
-
-            imageSource: imageProc.payloadImageUrl
-            onLoadRequestedFile: imageProc.payloadImageUrl = url
         }
 
         GridLayout {
@@ -171,9 +165,6 @@ Window {
             Layout.fillHeight: true
             title: "Result"
             titleSize: origImageUI.titleSize
-
-            imageSource: imageProc.resultImageUrl
-            onLoadRequestedFile: imageProc.resultImageUrl = url
         }
 
         Keys.onPressed: {
@@ -184,10 +175,25 @@ Window {
         }
 
 
+        // Bindings for ImageProc members
+        Binding {
+            target: imageProc
+            property: "originalImageUrl"
+            value: origImageUI.imageSource
+        }
 
+        Binding {
+            target: imageProc
+            property: "payloadImageUrl"
+            value: payloadImageUI.imageSource
+        }
+
+        Binding {
+            target: imageProc
+            property: "resultImageUrl"
+            value: resultImageUI.imageSource
+        }
     }
-
-
 }
 
 
