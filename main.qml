@@ -2,13 +2,13 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 1.4
-import "./assets/components/"
+import "assets/components/"
 
 Window {
     id: mainWindow
 
     property double aspectRatio: (screen.width / screen.height)
-    property int startHeight: (screen.height >> 1)
+    property int startHeight: (screen.height / 2)
 
     // FOR TESTING ONLY
     height: 720
@@ -17,7 +17,7 @@ Window {
     //    height: mainWindow.startHeight // 100%
     //    width: mainWindow.startHeight * mainWindow.aspectRatio
 
-    minimumHeight: (mainWindow.startHeight >> 1) + (mainWindow.startHeight >> 2) // 75%
+    minimumHeight: (mainWindow.startHeight / 2) + (mainWindow.startHeight / 4) // 75%
     minimumWidth: mainWindow.minimumHeight * mainWindow.aspectRatio
 
     maximumHeight: screen.height // 200%
@@ -49,7 +49,6 @@ Window {
     //    flags: Qt.FramelessWindowHint TODO: Make an OP border system
 
     GridLayout {
-
         id : mainGridLayout
         anchors.margins: 10
         anchors.fill: parent
@@ -57,14 +56,17 @@ Window {
         columns: (mainWindow.width / mainWindow.height >=1) ? 5 : 1
         rows: (mainWindow.width / mainWindow.height >=1) ? 1 : 5
 
-        property int maxTitleLength: Math.max(origImageUI.title.length, payloadImageUI.title.length, resultImageUI.title.length)
+        property int titleSize: Math.min(origImageUI.width, origImageUI.height) / Math.max(origImageUI.title.length, payloadImageUI.title.length, resultImageUI.title.length)
 
         ImageUI {
             id: origImageUI
             Layout.fillWidth: true
             Layout.fillHeight: true
             title: "Original Image"
-            titleSize: Math.min(origImageUI.width, origImageUI.height) / mainGridLayout.maxTitleLength
+            titleSize: mainGridLayout.titleSize
+
+            imageSource: imageProc.originalImageUrl
+            onLoadRequestedFile: imageProc.originalImageUrl = url
         }
 
         Label {

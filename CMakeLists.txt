@@ -30,11 +30,13 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 if(ANDROID)
     add_library(Steganography SHARED
       main.cpp
+      imageproc.cpp
       qml.qrc
     )
 else()
     add_executable(Steganography
       main.cpp
+      imageproc.cpp
       qml.qrc
     )
 endif()

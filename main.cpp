@@ -1,5 +1,8 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+
+#include "imageproc.h"
 
 int main(int argc, char *argv[])
 {
@@ -7,6 +10,7 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    ImageProc i;
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     engine.addImportPath("qrc:/.");
@@ -16,6 +20,6 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
-
+    engine.rootContext()->setContextProperty("imageProc", &i);
     return app.exec();
 }

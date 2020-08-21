@@ -7,6 +7,8 @@ Item {
     id: container
     property alias title: headerLabel.text
     property alias titleSize: headerLabel.font.pixelSize
+    property alias imageSource: image.source
+    signal loadRequestedFile(string url)
 
     ColumnLayout {
         id: columnLayout
@@ -21,7 +23,7 @@ Item {
                 id: image
                 anchors.fill: parent
                 clip: true
-                source: "../images/placeholder.png"
+                source: "../images/placeholder"
                 fillMode: Image.PreserveAspectCrop
             }
 
@@ -38,7 +40,7 @@ Item {
                 }
 
                 RoundButton {
-                    id: loadButton
+                    id: loadImageButton
                     anchors.centerIn: parent
 
                     font.underline: true
@@ -46,34 +48,34 @@ Item {
                     font.pixelSize: headerLabel.font.pixelSize
                     text: "\u21A5"
 
-                    onClicked: {
-                        openFileDialog.open();
+                    onClicked: loadImageDialog.open();
+
+                    FileDialog {
+                        id: loadImageDialog
+                        title: "Open an image"
+                        folder: shortcuts.desktop
+                        nameFilters: [ "Image files (*.jpg *.png *.bmp)", "All files (*)" ]
+
+                        onAccepted: container.loadRequestedFile(loadImageDialog.fileUrl)
                     }
+
                 }
 
                 RoundButton {
-                    id: resetButton
-                    width: loadButton.width / 2
-                    height: loadButton.height / 2
-                    anchors.verticalCenter: loadButton.verticalCenter
-                    anchors.left: loadButton.right
-                    anchors.leftMargin: resetButton.font.pixelSize
+                    id: resetImageButton
+                    width: loadImageButton.width / 2
+                    height: loadImageButton.height / 2
+                    anchors.verticalCenter: loadImageButton.verticalCenter
+                    anchors.left: loadImageButton.right
+                    anchors.leftMargin: resetImageButton.font.pixelSize
 
                     font.bold: true
-                    font.pixelSize: Math.max(loadButton.font.pixelSize / 2 , 12)
+                    font.pixelSize: Math.max(loadImageButton.font.pixelSize / 2 , 12)
                     text: "\u2205"
 
-                    onClicked: image.source = "../images/placeholder.png"
+                    onClicked: container.loadRequestedFile("")
                 }
 
-                FileDialog {
-                    id: openFileDialog
-                    title: "Open an image"
-                    folder: shortcuts.desktop
-                    nameFilters: [ "Image files (*.jpg *.png *.bmp)", "All files (*)" ]
-
-                    onAccepted: image.source = openFileDialog.fileUrl
-                }
             }
 
             Label {
