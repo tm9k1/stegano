@@ -193,6 +193,12 @@ Window {
             property: "resultImageUrl"
             value: resultImageUI.imageSource
         }
+
+        Binding {
+            target: imageProc
+            property: "bitCount"
+            value: if (bitCountTextField.acceptableInput) parseInt(bitCountTextField.text)
+        }
     }
 }
 
