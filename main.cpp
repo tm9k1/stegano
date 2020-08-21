@@ -10,7 +10,9 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    // create custom QObjects before engine so engine can destroy correctly
     ImageProc i;
+
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     engine.addImportPath("qrc:/.");
@@ -19,7 +21,10 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
-    engine.load(url);
+
+    // add custom QObjects to the QML as property before loading the QML
     engine.rootContext()->setContextProperty("imageProc", &i);
+
+    engine.load(url);
     return app.exec();
 }

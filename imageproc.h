@@ -6,17 +6,15 @@
 class ImageProc : public QObject
 {
     Q_OBJECT
+
     Q_PROPERTY(QString originalImageUrl
-               READ getOriginalImageUrl
-               WRITE setOriginalImageUrl
+               MEMBER m_originalImageUrl
                RESET resetOriginalImageUrl
                NOTIFY originalImageUrlChanged)
 
 public:
     explicit ImageProc(QObject *parent = nullptr);
 
-    QString getOriginalImageUrl() const;
-    void setOriginalImageUrl(const QString &newOriginalImageUrl);
     void resetOriginalImageUrl();
 
 signals:
@@ -24,7 +22,6 @@ signals:
 
 private:
     QString m_originalImageUrl;
-
 };
 
 #endif // IMAGEPROC_H
