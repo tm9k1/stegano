@@ -46,7 +46,7 @@ Item {
                     id: loadOverLayRectangle
                     anchors.fill: parent
                     color: "#4d4d4d"
-                    opacity: 0.5
+                    opacity: 0.4
 
                     states: [
                         State {
@@ -130,22 +130,41 @@ Item {
                 text: "Some Title"
             }
 
-            RowLayout {
+            Rectangle {
+                id: saveAreaRectangle
                 anchors.bottom: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: headerLabel.font.pixelSize * 4
 
-                RoundButton {
-                    id: saveButton
+                color: loadOverLayRectangle.color
+                opacity: 0
 
-                    Layout.bottomMargin: saveButton.height / 2
-
-                    font.family: sanFransicoPro.name
-                    font.pixelSize: headerLabel.font.pixelSize / 2
-                    text: "Save Image"
-
+                MouseArea {
+                    id: saveAreaMouseArea
+                    anchors.fill: parent
                     enabled: false
-                    onClicked: saveFileDialog.open()
+
+                    onHoveredChanged: {
+                        if (saveAreaMouseArea.containsMouse) {
+                            saveAreaRectangle.opacity = 0.7;
+                        } else {
+                            saveAreaRectangle.opacity = 0;
+                        }
+                    }
                 }
+            }
+
+            RoundButton {
+                id: saveButton
+                anchors.centerIn: saveAreaRectangle
+                font.family: sanFransicoPro.name
+                font.pixelSize: headerLabel.font.pixelSize / 2
+                text: "Save Image"
+
+                enabled: false
+                onClicked: saveFileDialog.open()
+
 
                 FileDialog {
                     id: saveFileDialog
@@ -170,6 +189,8 @@ Item {
             PropertyChanges { target: resetImageButton; enabled: true }
             PropertyChanges { target: image; opacity: 1 }
             PropertyChanges { target: placeholderImage; opacity: 0 }
+            PropertyChanges { target: saveAreaMouseArea; enabled: true }
+            PropertyChanges { target: saveAreaMouseArea; hoverEnabled: true }
         }
     ]
 
