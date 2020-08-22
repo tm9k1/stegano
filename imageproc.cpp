@@ -15,8 +15,11 @@ ImageProc::ImageProc(QObject *parent) : QObject(parent)
 
 }
 
-bool ImageProc::hideImage()
+int ImageProc::hideImage()
 {
+    if(!m_originalImageUrl.isLocalFile() || !m_payloadImageUrl.isLocalFile() || !m_resultImageUrl.isLocalFile()) {
+        return code::fileLoadError;
+    }
     qDebug() << m_originalImageUrl;
     qDebug() << m_payloadImageUrl;
     qDebug() << m_resultImageUrl;

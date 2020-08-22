@@ -107,6 +107,7 @@ Window {
 
                 Layout.preferredWidth: backwardLabel.width
                 horizontalAlignment: TextInput.AlignHCenter
+
                 background: Item {
                     Rectangle {
                         id: bitCountBackgroundRectangle
@@ -123,17 +124,23 @@ Window {
 
                 ToolTip.text: "Number of bits to use for the process (1- poor payload quality, 2, 3- best payload quality)"
 
-                onFocusChanged: bitCountTextField.ToolTip.visible = (focus != Qt.NoFocus)
+                onFocusChanged: bitCountTextField.ToolTip.visible = (bitCountTextField.focus !== Boolean(Qt.NoFocus))
 
                 onTextEdited: {
                     if (bitCountTextField.acceptableInput) {
-                        bitCountBackgroundRectangle.color = "#8800cc00";
-                        bitCountTextField.ToolTip.visible = false;
+                        bitCountTextField.state = "acceptable"
                     } else {
-                        bitCountBackgroundRectangle.color = "#88000000";
-                        bitCountTextField.ToolTip.visible = true;
+                        bitCountTextField.state = ""
                     }
                 }
+
+                states: [
+                    State {
+                        name: "acceptable"
+                        PropertyChanges { target: bitCountBackgroundRectangle; color: "#8800cc00" }
+                        PropertyChanges { target: bitCountTextField; ToolTip.visible: false }
+                    }
+                ]
             }
 
             Button {
@@ -145,10 +152,11 @@ Window {
 
                 text: "<font color='#eff0f1'>" + (mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9") + "</font"
                 onClicked: {
-                    if (imageProc.hideImage() == 0) {
+                    var returnCode = imageProc.hideImage();
+                    if (returnCode === 0) {
                         console.log("hideImage returned successfully");
                     } else {
-                        console.log("hideImage had an error!");
+                        console.log("hideImage had an error!", returnCode);
                     }
                 }
             }
