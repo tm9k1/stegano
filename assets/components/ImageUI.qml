@@ -38,7 +38,11 @@ Item {
 
             MouseArea {
                 id: loadImageMouseArea
-                anchors.fill: parent
+                anchors.top: headerRectangle.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: saveAreaRectangle.top
+
                 hoverEnabled: true
                 onHoveredChanged: loadOverLayRectangle.state = (loadImageMouseArea.containsMouse) ? "hovered" : ""
 
@@ -115,11 +119,19 @@ Item {
 
             }
 
+            Rectangle {
+                id: headerRectangle
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: headerLabel.font.pixelSize * 2
+                color: loadOverLayRectangle.color
+                opacity: 0.6
+            }
+
             Label {
                 id: headerLabel
-                anchors.top: parent.top
-                anchors.topMargin: headerLabel.font.pixelSize / 4
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.centerIn: headerRectangle
 
                 font.underline: true
                 font.family: sanFransicoPro.name
@@ -127,6 +139,7 @@ Item {
                 font.pixelSize: 20
                 style: Text.Raised
                 styleColor: "#4d4d4d"
+
                 text: "Some Title"
             }
 
@@ -138,7 +151,7 @@ Item {
                 height: headerLabel.font.pixelSize * 4
 
                 color: loadOverLayRectangle.color
-                opacity: 0
+                opacity: 0.6
 
                 MouseArea {
                     id: saveAreaMouseArea
@@ -149,7 +162,7 @@ Item {
                         if (saveAreaMouseArea.containsMouse) {
                             saveAreaRectangle.opacity = 0.7;
                         } else {
-                            saveAreaRectangle.opacity = 0;
+                            saveAreaRectangle.opacity = 0.6;
                         }
                     }
                 }
@@ -161,7 +174,6 @@ Item {
                 font.family: sanFransicoPro.name
                 font.pixelSize: headerLabel.font.pixelSize / 2
                 text: "Save Image"
-
                 enabled: false
                 onClicked: saveFileDialog.open()
 
