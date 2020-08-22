@@ -27,6 +27,7 @@ class ImageProc : public QObject
 public:
     explicit ImageProc(QObject *parent = nullptr);
 
+    Q_INVOKABLE bool hideImage();
 signals:
     void originalImageUrlChanged();
     void payloadImageUrlChanged();

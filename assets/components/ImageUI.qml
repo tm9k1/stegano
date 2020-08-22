@@ -7,23 +7,33 @@ Item {
     id: container
     property alias title: headerLabel.text
     property alias titleSize: headerLabel.font.pixelSize
-    property alias imageSource: image.source
 
     ColumnLayout {
         id: columnLayout
-        property int roundRadius: 5
-
         anchors.fill: parent
+
         Rectangle {
             Layout.fillHeight: true
             Layout.fillWidth: true
 
             Image {
-                id: image
+                id: placeholderImage
                 anchors.fill: parent
                 clip: true
                 source: "../images/placeholder"
                 fillMode: Image.PreserveAspectCrop
+
+                opacity: 1.0
+            }
+
+            Image {
+                id: image
+                anchors.fill: parent
+                clip: true
+                source: ""
+                fillMode: Image.PreserveAspectCrop
+
+                opacity: 0.0
             }
 
             MouseArea {
@@ -36,7 +46,7 @@ Item {
                     id: loadOverLayRectangle
                     anchors.fill: parent
                     color: "#4d4d4d"
-                    opacity: 0.8
+                    opacity: 0.5
 
                     states: [
                         State {
@@ -100,7 +110,7 @@ Item {
                     text: "\u2205"
 
                     enabled: false
-                    onClicked: image.source = "../images/placeholder"
+                    onClicked: container.state = ""
                 }
 
             }
@@ -114,7 +124,7 @@ Item {
                 font.underline: true
                 font.family: sanFransicoPro.name
                 color: "#eff0f1"
-                font.pixelSize: 18
+                font.pixelSize: 20
                 style: Text.Raised
                 styleColor: "#4d4d4d"
                 text: "Some Title"
@@ -128,7 +138,6 @@ Item {
                     id: saveButton
 
                     Layout.bottomMargin: saveButton.height / 2
-                    radius: columnLayout.roundRadius
 
                     font.family: sanFransicoPro.name
                     font.pixelSize: headerLabel.font.pixelSize / 2
@@ -154,12 +163,48 @@ Item {
 
     states: [
         State {
-           name: "loaded"
-//           when:
+            name: "loaded"
+            when: image.source != ""
+
+            PropertyChanges { target: saveButton; enabled: true }
+            PropertyChanges { target: resetImageButton; enabled: true }
+            PropertyChanges { target: image; opacity: 1 }
+            PropertyChanges { target: placeholderImage; opacity: 0 }
         }
     ]
 
     transitions: [
+        Transition { from: ""; to: "loaded"; reversible: true
+            SequentialAnimation {
+                // keep this above so it triggers as the last animation in reverse
+                // This is a workaround. It'd be nice to have a cleaner way to
+                // reset image.source after the cross-fade animation is complete
+                //
+                ScriptAction {
+                    script: {
+                        if(container.state == "") {
+                            image.source = "";
+                        }
+                    }
+                }
+
+                ParallelAnimation {
+                    NumberAnimation {
+                        target: placeholderImage
+                        property: "opacity"
+                        duration: 200
+                        easing.type: Easing.InOutQuad
+                    }
+
+                    NumberAnimation {
+                        target: image
+                        property: "opacity"
+                        duration: 200
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+            }
+        }
     ]
 }
 

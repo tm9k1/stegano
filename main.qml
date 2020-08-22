@@ -58,14 +58,11 @@ Window {
         columns: mainWindow.isLandscapeMode ? 5 : 1
         rows: mainWindow.isLandscapeMode ? 1 : 5
 
-        property int titleSize: Math.min(origImageUI.width, origImageUI.height) / Math.max(origImageUI.title.length, payloadImageUI.title.length, resultImageUI.title.length)
-
         ImageUI {
             id: origImageUI
             Layout.fillWidth: true
             Layout.fillHeight: true
             title: "Original Image"
-            titleSize: mainGridLayout.titleSize
         }
 
         Label {
@@ -83,7 +80,6 @@ Window {
             Layout.fillWidth: true
             Layout.fillHeight: true
             title: "Payload Image"
-            titleSize: origImageUI.titleSize
         }
 
         GridLayout {
@@ -148,7 +144,13 @@ Window {
                 font.pixelSize: origImageUI.titleSize * 2
 
                 text: "<font color='#eff0f1'>" + (mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9") + "</font"
-                //                onClicked: imageProc.doStuff();
+                onClicked: {
+                    if (imageProc.hideImage() == 0) {
+                        console.log("hideImage returned successfully");
+                    } else {
+                        console.log("hideImage had an error!");
+                    }
+                }
             }
         }
 
@@ -158,7 +160,6 @@ Window {
             Layout.fillWidth: true
             Layout.fillHeight: true
             title: "Result"
-            titleSize: origImageUI.titleSize
         }
 
         Keys.onPressed: {
@@ -200,6 +201,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.5}
+    D{i:0;formeditorZoom:0.75}
 }
 ##^##*/
