@@ -99,6 +99,7 @@ Item {
                     font.pixelSize: Math.max(loadImageButton.font.pixelSize / 2 , 12)
                     text: "\u2205"
 
+                    enabled: false
                     onClicked: image.source = "../images/placeholder"
                 }
 
@@ -133,6 +134,7 @@ Item {
                     font.pixelSize: headerLabel.font.pixelSize / 2
                     text: "Save Image"
 
+                    enabled: false
                     onClicked: saveFileDialog.open()
                 }
 
@@ -149,6 +151,16 @@ Item {
             }
         }
     }
+
+    states: [
+        State {
+           name: "loaded"
+//           when:
+        }
+    ]
+
+    transitions: [
+    ]
 }
 
 /*##^##
