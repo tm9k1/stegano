@@ -30,12 +30,39 @@ Item {
                 id: loadImageMouseArea
                 anchors.fill: parent
                 hoverEnabled: true
+                onHoveredChanged: loadOverLayRectangle.state = (loadImageMouseArea.containsMouse) ? "hovered" : ""
 
                 Rectangle {
                     id: loadOverLayRectangle
                     anchors.fill: parent
                     color: "#4d4d4d"
                     opacity: 0.8
+
+                    states: [
+                        State {
+                            name: "hovered"
+                            PropertyChanges {
+                                target: loadOverLayRectangle
+                                opacity: 0.7
+                            }
+                        }
+                    ]
+
+                    transitions: [
+                        Transition {
+                            from: ""
+                            to: "hovered"
+                            reversible: true
+                            ParallelAnimation {
+                                NumberAnimation {
+                                    target: loadOverLayRectangle
+                                    properties: "opacity"
+                                    duration: 200
+                                    easing.type: Easing.InOutQuad
+                                }
+                            }
+                        }
+                    ]
                 }
 
                 RoundButton {
@@ -122,41 +149,6 @@ Item {
             }
         }
     }
-
-    states: [
-        State {
-            name: "hovered"
-            when: loadImageMouseArea.containsMouse
-
-            PropertyChanges {
-                target: loadOverLayRectangle
-                opacity: 0.7
-            }
-
-        }
-        //        ,
-        //        State {
-        //            name: "reveal"
-        //            // SET when: TO THE POINT WHEN WE HAVE A GOOD RESULT -- SIGNAL COMES FROM C++
-        //        }
-
-    ]
-
-    transitions: [
-        Transition {
-            from: ""
-            to: "hovered"
-            reversible: true
-            ParallelAnimation {
-                NumberAnimation {
-                    target: loadOverLayRectangle
-                    properties: "opacity"
-                    duration: 200
-                    easing.type: Easing.InOutQuad
-                }
-            }
-        }
-    ]
 }
 
 /*##^##
