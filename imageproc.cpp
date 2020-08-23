@@ -28,7 +28,7 @@ int ImageProc::hideImage()
         return code::fileLoadError;
     }
 
-    if(m_bitCount < 1) {
+    if(m_bitCount < 1 || m_bitCount > 3) {
         return code::zeroBitCount;
     }
 
@@ -176,7 +176,7 @@ int ImageProc::retrieveImage()
         return code::fileLoadError;
     }
 
-    if(m_bitCount < 1) {
+    if(m_bitCount < 1 || m_bitCount > 3) {
         return code::zeroBitCount;
     }
 
