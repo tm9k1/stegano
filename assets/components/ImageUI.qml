@@ -2,11 +2,15 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.15
 import QtQuick.Dialogs 1.3
 import QtQuick.Controls 2.15
+import QtGraphicalEffects 1.15
 
 Item {
     id: container
     property alias title: headerLabel.text
+    property alias imageSource: image.source
     property alias titleSize: headerLabel.font.pixelSize
+    property alias grayscaleMode: colorizeImage.visible
+    signal clickedOnImage()
 
     ColumnLayout {
         id: columnLayout
@@ -34,10 +38,20 @@ Item {
                 fillMode: Image.PreserveAspectCrop
 
                 opacity: 0.0
+
+                Colorize {
+                    id: colorizeImage
+                    anchors.fill: image
+                    source: image
+                    saturation: 0
+                    visible: false
+                }
             }
+
 
             MouseArea {
                 id: loadImageMouseArea
+
                 anchors.top: headerRectangle.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -45,6 +59,7 @@ Item {
 
                 hoverEnabled: true
                 onHoveredChanged: loadOverLayRectangle.state = (loadImageMouseArea.containsMouse) ? "hovered" : ""
+                onClicked: container.clickedOnImage();
 
                 Rectangle {
                     id: loadOverLayRectangle

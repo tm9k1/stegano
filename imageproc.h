@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QUrl>
+#include <QTemporaryFile>
 
 class ImageProc : public QObject
 {
@@ -28,6 +29,12 @@ public:
     explicit ImageProc(QObject *parent = nullptr);
 
     Q_INVOKABLE int hideImage();
+    Q_INVOKABLE int retrieveImage();
+
+    Q_INVOKABLE void openImage(const int &n) const;
+
+    QUrl getOriginalImageUrl() const;
+
 signals:
     void originalImageUrlChanged();
     void payloadImageUrlChanged();
@@ -39,6 +46,9 @@ private:
     QUrl m_payloadImageUrl;
     QUrl m_resultImageUrl;
     quint8 m_bitCount;
+    QTemporaryFile tempResultFile;
+    QTemporaryFile tempHiddenFile;
+    QTemporaryFile tempCarrierFile;
 };
 
 #endif // IMAGEPROC_H

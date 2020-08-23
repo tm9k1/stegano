@@ -63,6 +63,20 @@ Window {
             Layout.fillWidth: true
             Layout.fillHeight: true
             title: "Original Image"
+
+            Connections {
+                target: imageProc
+                function onOriginalImageUrlChanged() {
+                    origImageUI.imageSource = imageProc.originalImageUrl;
+                }
+            }
+
+            Connections {
+                target: origImageUI
+                function onClickedOnImage() {
+                    imageProc.openImage(0);
+                }
+            }
         }
 
         Label {
@@ -79,7 +93,21 @@ Window {
             id: payloadImageUI
             Layout.fillWidth: true
             Layout.fillHeight: true
+            grayscaleMode: true
             title: "Payload Image"
+
+            Connections {
+                target: imageProc
+                function onPayloadImageUrlChanged() {
+                    payloadImageUI.imageSource = imageProc.payloadImageUrl;
+                }
+            }
+            Connections {
+                target: payloadImageUI
+                function onClickedOnImage() {
+                    imageProc.openImage(1);
+                }
+            }
         }
 
         GridLayout {
@@ -99,7 +127,15 @@ Window {
                 font.pixelSize: origImageUI.titleSize * 2
 
                 text: "<font color='#eff0f1'>" + (mainWindow.isLandscapeMode ? "\u21e6" : "\u21e7") + "</font>"
-                //                onClicked: imageProc.doStuff();
+                onClicked: {
+                    var returnCode = imageProc.retrieveImage();
+                    if (returnCode === 0) {
+                        console.log("hideImage returned successfully");
+                    } else {
+                        console.log("retrieveImage had an error!", returnCode);
+                    }
+                }
+
             }
 
             TextField {
@@ -168,6 +204,19 @@ Window {
             Layout.fillWidth: true
             Layout.fillHeight: true
             title: "Result"
+
+            Connections {
+                target: imageProc
+                function onResultImageUrlChanged() {
+                    resultImageUI.imageSource = imageProc.resultImageUrl;
+                }
+            }
+            Connections {
+                target: resultImageUI
+                function onClickedOnImage() {
+                    imageProc.openImage(2);
+                }
+            }
         }
 
         Keys.onPressed: {
