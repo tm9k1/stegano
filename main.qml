@@ -130,7 +130,7 @@ Window {
                 onClicked: {
                     var returnCode = imageProc.retrieveImage();
                     if (returnCode === 0) {
-                        console.log("hideImage returned successfully");
+                        console.log("retrieveImage returned successfully");
                     } else {
                         console.log("retrieveImage had an error!", returnCode);
                     }
