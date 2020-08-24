@@ -66,7 +66,7 @@ int ImageProc::hideImage()
     resetTempFile(m_tempResultFile);
 
     QFileInfo tempResultFileInfo(m_tempResultFile->fileName());
-    modulatedImage->save(tempResultFileInfo.absoluteFilePath());
+    modulatedImage->save(tempResultFileInfo.absoluteFilePath(), QStringLiteral("png").toStdString().c_str());
 
     QUrl tempResultFileUrl = QUrl(m_tempResultFile->fileName());
     tempResultFileUrl.setScheme("file");
@@ -115,10 +115,10 @@ int ImageProc::retrieveImage()
     resetTempFile(m_tempPayloadFile);
 
     QFileInfo tempPayloadFileInfo(m_tempPayloadFile->fileName());
-    payloadImage->save(tempPayloadFileInfo.absoluteFilePath());
+    payloadImage->save(tempPayloadFileInfo.absoluteFilePath(), QStringLiteral("png").toStdString().c_str());
 
     QFileInfo tempCarrierFileInfo(m_tempCarrierFile->fileName());
-    carrierImage->save(tempCarrierFileInfo.absoluteFilePath());
+    carrierImage->save(tempCarrierFileInfo.absoluteFilePath(), QStringLiteral("png").toStdString().c_str());
 
     QUrl tempPayloadFileUrl(m_tempPayloadFile->fileName());
     tempPayloadFileUrl.setScheme("file");
@@ -140,9 +140,9 @@ int ImageProc::retrieveImage()
     return code::success;
 }
 
-void ImageProc::openImage(int image) const
+void ImageProc::openImage(const int imageType) const
 {
-    switch(image) {
+    switch(imageType) {
     case ImageProcUtil::ImageType::CarrierImage :
         QDesktopServices::openUrl(m_carrierImageUrl);
         break;
@@ -156,4 +156,34 @@ void ImageProc::openImage(int image) const
         qDebug() << "invalid input";
         return;
     }
+}
+
+
+bool ImageProc::saveImage(const QUrl &destinationUrl, const int imageType) const
+{
+
+    QImage* image = new QImage();
+
+    switch(imageType) {
+    case ImageProcUtil::ImageType::CarrierImage :
+        image->load(m_carrierImageUrl.url(QUrl::PreferLocalFile));
+        break;
+    case ImageProcUtil::ImageType::PayloadImage:
+        image->load(m_payloadImageUrl.url(QUrl::PreferLocalFile));
+        break;
+    case ImageProcUtil::ImageType::ModulatedImage:
+        image->load(m_resultImageUrl.url(QUrl::PreferLocalFile));
+        break;
+    default:
+        qDebug() << "invalid input";
+        return false;
+    }
+
+    qDebug() << "image isNull? " << image->isNull();
+
+    qDebug() << image->save(destinationUrl.url(QUrl::PreferLocalFile), QStringLiteral("png").toStdString().c_str());
+
+    delete image;
+
+    return true;
 }

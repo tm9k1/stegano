@@ -107,20 +107,20 @@ bool SteganographyLogic::hideImage(QImage const* carrierImage, QImage const* pay
                 const quint8* payloadImagePixel = reinterpret_cast<const quint8*>(
                             bnwPayloadImageScan + j);
 
-                //                if( i == 0 && j == 0) {
-                //                    qDebug() << "payloadPixelInt = " << QString::number(*payloadImagePixel, 2);
-                //                }
+                if( i == 0 && j == 0) {
+                    qDebug() << "payloadPixelInt = " << QString::number(*payloadImagePixel, 2);
+                }
 
                 // these should be masked from payloadImagePixel
                 quint8 greenComponentMask = ((*payloadImagePixel) & 0b11000000);
                 quint8 redComponentMask = ((*payloadImagePixel) & 0b00111000);
                 quint8 blueComponentMask = ((*payloadImagePixel) & 0b00000111);
 
-                //                if( i == 0 && j == 0) {
-                //                    qDebug() << "Bit mask for green component = " << QString::number(greenComponentMask, 2);
-                //                    qDebug() << "Bit mask for red component   = " << QString::number(redComponentMask, 2);
-                //                    qDebug() << "Bit mask for blue component  = " << QString::number(blueComponentMask, 2);
-                //                }
+                if( i == 0 && j == 0) {
+                    qDebug() << "Bit mask for green component = " << QString::number(greenComponentMask, 2);
+                    qDebug() << "Bit mask for red component   = " << QString::number(redComponentMask, 2);
+                    qDebug() << "Bit mask for blue component  = " << QString::number(blueComponentMask, 2);
+                }
 
                 // these should be modulated RGB data values
                 modulatedGreenComponent = modulatedGreenComponent | (greenComponentMask >> (8- ((m_bitCount > 2) ? 2 : 1)));

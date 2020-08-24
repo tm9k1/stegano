@@ -78,6 +78,15 @@ Window {
                     imageProc.openImage(ImageProcUtil.CarrierImage);
                 }
             }
+
+            Connections {
+                target: origImageUI
+                function onSaveFileRequested(destinationUrl: url) {
+                    console.log("calling onSavefileRequested : ", destinationUrl);
+                    imageProc.saveImage(destinationUrl, ImageProcUtil.CarrierImage);
+                    console.log("back from save command!");
+                }
+            }
         }
 
         Label {
@@ -110,6 +119,7 @@ Window {
                     imageProc.openImage(ImageProcUtil.PayloadImage);
                 }
             }
+
         }
 
         GridLayout {
@@ -219,6 +229,7 @@ Window {
                     imageProc.openImage(ImageProcUtil.ModulatedImage);
                 }
             }
+
         }
 
         Keys.onPressed: {

@@ -5,6 +5,7 @@
 #include <QUrl>
 #include <QTemporaryFile>
 #include <QPointer>
+#include <QUrl>
 
 namespace ImageProcUtil
 {
@@ -45,8 +46,9 @@ public:
     Q_INVOKABLE int hideImage();
     Q_INVOKABLE int retrieveImage();
 
-    Q_INVOKABLE void openImage(int image) const;
-    Q_INVOKABLE void saveImage(int image) const;
+    Q_INVOKABLE void openImage(const int image) const;
+    Q_INVOKABLE bool saveImage(const QUrl &destinationUrl, const int image) const;
+
 
     void resetTempFile(QPointer<QTemporaryFile> &tempFile);
 

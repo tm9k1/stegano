@@ -11,6 +11,7 @@ Item {
     property alias titleSize: headerLabel.font.pixelSize
     property alias grayscaleMode: colorizeImage.visible
     signal clickedOnImage()
+    signal saveFileRequested(url destinationUrl)
 
     ColumnLayout {
         id: columnLayout
@@ -47,7 +48,6 @@ Item {
                     visible: false
                 }
             }
-
 
             MouseArea {
                 id: loadImageMouseArea
@@ -199,9 +199,7 @@ Item {
                     folder: shortcuts.desktop
                     nameFilters: [ "Image files (*.jpg *.png *.bmp)", "All files (*)" ]
                     selectExisting: false
-                    onAccepted: {
-                        // fun(saveFileDialog.fileUrl);
-                    }
+                    onAccepted: container.saveFileRequested(saveFileDialog.fileUrl)
                 }
             }
         }
