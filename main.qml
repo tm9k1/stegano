@@ -147,11 +147,8 @@ Window {
             Button {
                 id: backwardLabel
                 opacity: 0.8
-                flat: true
-                font.bold: true
-                font.pixelSize: origImageUI.titleSize * 2
 
-                text: "<font color='#eff0f1'>" + (mainWindow.isLandscapeMode ? "\u21e6" : "\u21e7") + "</font>"
+                text: (mainWindow.isLandscapeMode ? "\u21e6" : "\u21e7")
                 onClicked: {
                     var returnCode = imageProc.retrieveImage();
                     if (returnCode === 0) {
@@ -209,9 +206,8 @@ Window {
                 opacity: 0.7
                 flat: true
                 font.bold: true
-                font.pixelSize: origImageUI.titleSize * 2
 
-                text: "<font color='#eff0f1'>" + (mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9") + "</font"
+                text: (mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9")
                 onClicked: {
                     var returnCode = imageProc.hideImage();
                     if (returnCode === 0) {
