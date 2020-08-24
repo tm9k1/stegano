@@ -163,7 +163,7 @@ Item {
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
-                height: headerLabel.font.pixelSize * 4
+                height: headerLabel.font.pixelSize * 3
 
                 color: loadOverLayRectangle.color
                 opacity: 0.6
@@ -186,12 +186,15 @@ Item {
             RoundButton {
                 id: saveButton
                 anchors.centerIn: saveAreaRectangle
+                width: implicitWidth * 1.5
+                enabled: false
+
                 font.family: sanFransicoPro.name
                 font.pixelSize: headerLabel.font.pixelSize / 2
-                text: "Save Image"
-                enabled: false
-                onClicked: saveFileDialog.open()
 
+                text: "Save Image"
+
+                onClicked: saveFileDialog.open()
 
                 FileDialog {
                     id: saveFileDialog
