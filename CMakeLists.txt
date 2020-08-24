@@ -8,9 +8,9 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
+SET(CMAKE_BUILD_TYPE Debug)
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
 # Check http://doc.qt.io/qt-5/deployment-android.html for more information.
 # They need to be set before the find_package(Qt5 ...) call.
@@ -31,12 +31,14 @@ if(ANDROID)
     add_library(Steganography SHARED
       main.cpp
       imageproc.cpp
+      steganographylogic.cpp
       qml.qrc
     )
 else()
     add_executable(Steganography
       main.cpp
       imageproc.cpp
+      steganographylogic.cpp
       qml.qrc
     )
 endif()

@@ -5,6 +5,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 
 import "assets/components/"
+import ImageProc.ImageProcUtil 1.0
 
 Window {
     id: mainWindow
@@ -66,15 +67,15 @@ Window {
 
             Connections {
                 target: imageProc
-                function onOriginalImageUrlChanged() {
-                    origImageUI.imageSource = imageProc.originalImageUrl;
+                function onCarrierImageUrlChanged() {
+                    origImageUI.imageSource = imageProc.carrierImageUrl;
                 }
             }
 
             Connections {
                 target: origImageUI
                 function onClickedOnImage() {
-                    imageProc.openImage(0);
+                    imageProc.openImage(ImageProcUtil.CarrierImage);
                 }
             }
         }
@@ -105,7 +106,8 @@ Window {
             Connections {
                 target: payloadImageUI
                 function onClickedOnImage() {
-                    imageProc.openImage(1);
+                    console.log(ImageProcUtil.PayloadImage);
+                    imageProc.openImage(ImageProcUtil.PayloadImage);
                 }
             }
         }
@@ -214,7 +216,7 @@ Window {
             Connections {
                 target: resultImageUI
                 function onClickedOnImage() {
-                    imageProc.openImage(2);
+                    imageProc.openImage(ImageProcUtil.ModulatedImage);
                 }
             }
         }
@@ -230,7 +232,7 @@ Window {
         // Bindings for ImageProc members
         Binding {
             target: imageProc
-            property: "originalImageUrl"
+            property: "carrierImageUrl"
             value: origImageUI.imageSource
         }
 
