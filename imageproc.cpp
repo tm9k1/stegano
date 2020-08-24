@@ -41,9 +41,6 @@ void ImageProc::resetTempFile(QPointer<QTemporaryFile> &tempFile)
 
 int ImageProc::hideImage()
 {
-    qDebug() << m_carrierImageUrl.toString();
-    qDebug() << m_payloadImageUrl.toString();
-
     if(!m_carrierImageUrl.isLocalFile() || !m_payloadImageUrl.isLocalFile()) {
         return code::fileLoadError;
     }
@@ -76,7 +73,6 @@ int ImageProc::hideImage()
 
     qDebug() << "modulatedImage is here: " << tempResultFileUrl;
 
-
     delete carrierImage;
     delete payloadImage;
     delete modulatedImage;
@@ -104,12 +100,6 @@ int ImageProc::retrieveImage()
 
     bool result = SteganographyLogic::retrieveImages(carrierImage, payloadImage, modulatedImage, m_bitCount);
     qDebug() << "retrieveImage() returned " << result;
-
-
-    // change API - DONE
-    // check if multiple usages still work
-    // change title
-    // add option for scaling payloadImage to full image size
 
     resetTempFile(m_tempCarrierFile);
     resetTempFile(m_tempPayloadFile);
@@ -178,8 +168,6 @@ bool ImageProc::saveImage(const QUrl &destinationUrl, const int imageType) const
         qDebug() << "invalid input";
         return false;
     }
-
-    qDebug() << "image isNull? " << image->isNull();
 
     qDebug() << image->save(destinationUrl.url(QUrl::PreferLocalFile), QStringLiteral("png").toStdString().c_str());
 
