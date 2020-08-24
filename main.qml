@@ -82,9 +82,11 @@ Window {
             Connections {
                 target: origImageUI
                 function onSaveFileRequested(destinationUrl: url) {
-                    console.log("calling onSavefileRequested : ", destinationUrl);
-                    imageProc.saveImage(destinationUrl, ImageProcUtil.CarrierImage);
-                    console.log("back from save command!");
+                    if(imageProc.saveImage(destinationUrl, ImageProcUtil.CarrierImage)) {
+                        console.log("saveImage() success");
+                    } else {
+                        console.log("saveImage() failed");
+                    }
                 }
             }
         }
@@ -112,6 +114,7 @@ Window {
                     payloadImageUI.imageSource = imageProc.payloadImageUrl;
                 }
             }
+
             Connections {
                 target: payloadImageUI
                 function onClickedOnImage() {
@@ -120,6 +123,16 @@ Window {
                 }
             }
 
+            Connections {
+                target: payloadImageUI
+                function onSaveFileRequested(destinationUrl: url) {
+                    if (imageProc.saveImage(destinationUrl, ImageProcUtil.PayloadImage)) {
+                        console.log("saveFile() success");
+                    } else {
+                        console.log("saveFile() failed");
+                    }
+                }
+            }
         }
 
         GridLayout {
@@ -227,6 +240,17 @@ Window {
                 target: resultImageUI
                 function onClickedOnImage() {
                     imageProc.openImage(ImageProcUtil.ModulatedImage);
+                }
+            }
+
+            Connections {
+                target: resultImageUI
+                function onSaveFileRequested(destinationUrl: url) {
+                    if (imageProc.saveImage(destinationUrl, ImageProcUtil.ModulatedImage)) {
+                        console.log("saveFile() success");
+                    } else {
+                        console.log("saveFile() failed");
+                    }
                 }
             }
 

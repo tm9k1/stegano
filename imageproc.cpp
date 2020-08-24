@@ -151,6 +151,7 @@ void ImageProc::openImage(const int imageType) const
 
 bool ImageProc::saveImage(const QUrl &destinationUrl, const int imageType) const
 {
+    //perhaps a simpler way would be to just copy the image from tempDir
 
     QImage* image = new QImage();
 
@@ -169,9 +170,14 @@ bool ImageProc::saveImage(const QUrl &destinationUrl, const int imageType) const
         return false;
     }
 
-    qDebug() << image->save(destinationUrl.url(QUrl::PreferLocalFile), QStringLiteral("png").toStdString().c_str());
+    if(image->isNull()) {
+        qDebug() << "image contents were null after loading the image. Returning.";
+        return false;
+    }
+
+    bool result = image->save(destinationUrl.url(QUrl::PreferLocalFile), QStringLiteral("png").toStdString().c_str());
 
     delete image;
 
-    return true;
+    return result;
 }
