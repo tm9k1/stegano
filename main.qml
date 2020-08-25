@@ -286,7 +286,7 @@ Window {
         Binding {
             target: imageProc
             property: "bitCount"
-            value: if (bitCountTextField.acceptableInput) parseInt(bitCountTextField.text)
+            value: (bitCountTextField.acceptableInput) ? parseInt(bitCountTextField.text) : -1
         }
     }
 }
