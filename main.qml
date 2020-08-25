@@ -55,6 +55,7 @@ Window {
         id : mainGridLayout
         anchors.margins: 10
         anchors.fill: parent
+
         focus: true
         columns: mainWindow.isLandscapeMode ? 5 : 1
         rows: mainWindow.isLandscapeMode ? 1 : 5
@@ -63,6 +64,7 @@ Window {
             id: origImageUI
             Layout.fillWidth: true
             Layout.fillHeight: true
+
             title: "Original Image"
 
             Connections {
@@ -105,6 +107,7 @@ Window {
             id: payloadImageUI
             Layout.fillWidth: true
             Layout.fillHeight: true
+
             grayscaleMode: true
             title: "Payload Image"
 
@@ -205,9 +208,10 @@ Window {
                 id: forwardLabel
                 opacity: 0.7
                 flat: true
-                font.bold: true
 
+                font.bold: true
                 text: (mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9")
+
                 onClicked: {
                     var returnCode = imageProc.hideImage();
                     if (returnCode === 0) {
@@ -219,11 +223,11 @@ Window {
             }
         }
 
-
         ImageUI {
             id: modulatedImageUI
             Layout.fillWidth: true
             Layout.fillHeight: true
+
             title: "Result"
 
             Connections {
@@ -232,6 +236,7 @@ Window {
                     modulatedImageUI.imageSource = imageProc.resultImageUrl;
                 }
             }
+
             Connections {
                 target: modulatedImageUI
                 function onClickedOnImage() {
@@ -249,7 +254,6 @@ Window {
                     }
                 }
             }
-
         }
 
         Keys.onPressed: {
@@ -259,8 +263,8 @@ Window {
             }
         }
 
-
-        // Bindings for ImageProc members
+        /* Bindings for ImageProc members
+         */
         Binding {
             target: imageProc
             property: "carrierImageUrl"

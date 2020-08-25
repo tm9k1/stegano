@@ -13,7 +13,8 @@ int main(int argc, char *argv[])
     app.setOrganizationName("Piyush");
     app.setOrganizationDomain("Aggarwal");
 
-    // create custom QObjects before engine so engine can destroy correctly
+    /* create custom QObjects before engine so engine can destroy correctly
+     */
     ImageProc i;
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -29,17 +30,17 @@ int main(int argc, char *argv[])
         }
     }, Qt::QueuedConnection);
 
-    // add custom QObjects to the QML as property before loading the QML
-
+    /* add custom QObjects to the QML as property before loading the QML
+     */
     engine.rootContext()->setContextProperty("imageProc", &i);
 
     qmlRegisterUncreatableMetaObject(
-      ImageProcUtil::staticMetaObject,          // static meta object
-      "ImageProc.ImageProcUtil",                // import statement (can be any string)
-      1, 0,                                     // major and minor version of the import
-      "ImageProcUtil",                          // name in QML (does not have to match C++ name)
-      "Error: only enums"                       // error in case someone tries to create a MyNamespace object
-    );
+                ImageProcUtil::staticMetaObject,          // static meta object
+                "ImageProc.ImageProcUtil",                // import statement (can be any string)
+                1, 0,                                     // major and minor version of the import
+                "ImageProcUtil",                          // name in QML (does not have to match C++ name)
+                "Error: only enums"                       // error in case someone tries to create a ImageProcUtil object
+                );
 
     engine.load(url);
 

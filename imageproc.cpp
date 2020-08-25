@@ -18,7 +18,7 @@ ImageProc::~ImageProc()
 
 void ImageProc::resetTempFile(QPointer<QTemporaryFile> &tempFile)
 {
-    if(tempFile != nullptr) { delete tempFile; }
+    if (tempFile != nullptr) { delete tempFile; }
 
     tempFile = new QTemporaryFile();
     tempFile->setFileTemplate((QDir::tempPath()+QStringLiteral("/XXXXXXXXXX")+
@@ -32,12 +32,12 @@ void ImageProc::resetTempFile(QPointer<QTemporaryFile> &tempFile)
 int ImageProc::hideImage()
 {
     // check if file exists
-    if(!m_carrierImageUrl.isLocalFile() || !m_payloadImageUrl.isLocalFile()) {
+    if (!m_carrierImageUrl.isLocalFile() || !m_payloadImageUrl.isLocalFile()) {
         return ImageProcUtil::ReturnCode::FileLoadError;
     }
 
     // check if inputs were valid
-    if(m_bitCount < ImageProcUtil::minimumBitCount || m_bitCount > ImageProcUtil::maximumBitCount) {
+    if (m_bitCount < ImageProcUtil::minimumBitCount || m_bitCount > ImageProcUtil::maximumBitCount) {
         return ImageProcUtil::ReturnCode::InvalidBitCount;
     }
 
@@ -59,7 +59,7 @@ int ImageProc::hideImage()
         return ImageProcUtil::ReturnCode::ImageLoadError;
     }
 
-    if(SteganographyLogic::hideImage(
+    if (SteganographyLogic::hideImage(
                 carrierImage, payloadImage, modulatedImage,m_bitCount) != true) {
         return ImageProcUtil::ReturnCode::ImageProcessError;
     }
@@ -94,21 +94,21 @@ int ImageProc::hideImage()
 
 int ImageProc::retrieveImage()
 {
-    if(!m_modulatedImageUrl.isLocalFile()) {
+    if (!m_modulatedImageUrl.isLocalFile()) {
         return ImageProcUtil::ReturnCode::FileLoadError;
     }
-    if(m_bitCount < ImageProcUtil::minimumBitCount || m_bitCount > ImageProcUtil::maximumBitCount) {
+    if (m_bitCount < ImageProcUtil::minimumBitCount || m_bitCount > ImageProcUtil::maximumBitCount) {
         return ImageProcUtil::ReturnCode::InvalidBitCount;
     }
 
     const QImage* modulatedImage = new QImage(m_modulatedImageUrl.url(QUrl::PreferLocalFile));
-    if(modulatedImage->isNull()) { return ImageProcUtil::ReturnCode::ImageLoadError; }
+    if (modulatedImage->isNull()) { return ImageProcUtil::ReturnCode::ImageLoadError; }
     QImage* carrierImage = new QImage(modulatedImage->size(), QImage::Format_RGB32);
-    if(carrierImage->isNull()) { return ImageProcUtil::ReturnCode::ImageLoadError; }
+    if (carrierImage->isNull()) { return ImageProcUtil::ReturnCode::ImageLoadError; }
     QImage* payloadImage = new QImage(modulatedImage->size(), QImage::Format_Indexed8);
-    if(payloadImage->isNull()) { return ImageProcUtil::ReturnCode::ImageLoadError; }
+    if (payloadImage->isNull()) { return ImageProcUtil::ReturnCode::ImageLoadError; }
 
-    if(SteganographyLogic::retrieveImages(carrierImage, payloadImage, modulatedImage, m_bitCount)  != true) {
+    if (SteganographyLogic::retrieveImages(carrierImage, payloadImage, modulatedImage, m_bitCount)  != true) {
         return ImageProcUtil::ReturnCode::ImageProcessError;
     }
 
@@ -210,7 +210,7 @@ bool ImageProc::saveImage(const QUrl &destinationUrl, const int imageType) const
         return ImageProcUtil::ReturnCode::FileLoadError;
     }
 
-    if(image->isNull()) {
+    if (image->isNull()) {
         qDebug() << "image contents were null after loading the image. Returning.";
         return ImageProcUtil::ReturnCode::ImageLoadError;
     }
@@ -219,7 +219,7 @@ bool ImageProc::saveImage(const QUrl &destinationUrl, const int imageType) const
 
     delete image;
 
-    if(result == true) {
+    if (result == true) {
         return ImageProcUtil::ReturnCode::Success;
     }
 

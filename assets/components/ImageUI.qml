@@ -24,25 +24,26 @@ Item {
             Image {
                 id: placeholderImage
                 anchors.fill: parent
+
                 clip: true
                 source: "../images/placeholder"
                 fillMode: Image.PreserveAspectCrop
-
                 opacity: 1.0
             }
 
             Image {
                 id: image
                 anchors.fill: parent
+
                 clip: true
                 source: ""
                 fillMode: Image.PreserveAspectCrop
-
                 opacity: 0.0
 
                 Colorize {
                     id: colorizeImage
                     anchors.fill: image
+
                     source: image
                     saturation: 0
                     visible: false
@@ -51,7 +52,6 @@ Item {
 
             MouseArea {
                 id: loadImageMouseArea
-
                 anchors.top: headerRectangle.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -70,6 +70,7 @@ Item {
                     states: [
                         State {
                             name: "hovered"
+
                             PropertyChanges {
                                 target: loadOverLayRectangle
                                 opacity: 0.7
@@ -82,6 +83,7 @@ Item {
                             from: ""
                             to: "hovered"
                             reversible: true
+
                             ParallelAnimation {
                                 NumberAnimation {
                                     target: loadOverLayRectangle
@@ -129,6 +131,7 @@ Item {
                     text: "\u2205"
 
                     enabled: false
+
                     onClicked: container.state = ""
                 }
 
@@ -139,6 +142,7 @@ Item {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
+
                 height: headerLabel.font.pixelSize * 2
                 color: loadOverLayRectangle.color
                 opacity: 0.6
@@ -150,11 +154,10 @@ Item {
 
                 font.underline: true
                 font.family: sanFransicoPro.name
-                color: "#eff0f1"
                 font.pixelSize: 20
+                color: "#eff0f1"
                 style: Text.Raised
                 styleColor: "#4d4d4d"
-
                 text: "Some Title"
             }
 
@@ -171,6 +174,7 @@ Item {
                 MouseArea {
                     id: saveAreaMouseArea
                     anchors.fill: parent
+
                     enabled: false
 
                     onHoveredChanged: {
@@ -187,11 +191,11 @@ Item {
                 id: saveButton
                 anchors.centerIn: saveAreaRectangle
                 width: implicitWidth * 1.5
+
                 enabled: false
 
                 font.family: sanFransicoPro.name
                 font.pixelSize: headerLabel.font.pixelSize / 2
-
                 text: "Save Image"
 
                 onClicked: saveFileDialog.open()
@@ -202,6 +206,7 @@ Item {
                     folder: shortcuts.desktop
                     nameFilters: [ "Image files (*.jpg *.png *.bmp)", "All files (*)" ]
                     selectExisting: false
+
                     onAccepted: container.saveFileRequested(saveFileDialog.fileUrl)
                 }
             }
@@ -225,10 +230,10 @@ Item {
     transitions: [
         Transition { from: ""; to: "loaded"; reversible: true
             SequentialAnimation {
-                // keep this above so it triggers as the last animation in reverse
-                // This is a workaround. It'd be nice to have a cleaner way to
-                // reset image.source after the cross-fade animation is complete
-                //
+                /* keep this above so it triggers as the last animation in reverse
+                 * This is a workaround. It'd be nice to have a cleaner way to
+                 * reset image.source after the cross-fade animation is complete
+                 */
                 ScriptAction {
                     script: {
                         if(container.state == "") {
