@@ -16,7 +16,22 @@ enum ImageType
     PayloadImage,
     ModulatedImage
 };
+
+enum ReturnCode{
+    Success=0,
+    FileLoadError,
+    InvalidBitCount,
+    ImageLoadError,
+    ImageProcessError,
+    UnknownError
+};
+
+const quint8 minimumBitCount = 1;
+const quint8 maximumBitCount = 3;
+const QString imageFormat = QStringLiteral("png");
+
 Q_ENUM_NS(ImageType)  // register the enum in meta object data
+Q_ENUM_NS(ReturnCode)
 }
 
 class ImageProc : public QObject
@@ -46,9 +61,8 @@ public:
     Q_INVOKABLE int hideImage();
     Q_INVOKABLE int retrieveImage();
 
-    Q_INVOKABLE void openImage(const int image) const;
+    Q_INVOKABLE bool openImage(const int image) const;
     Q_INVOKABLE bool saveImage(const QUrl &destinationUrl, const int image) const;
-
 
     void resetTempFile(QPointer<QTemporaryFile> &tempFile);
 
@@ -66,7 +80,6 @@ private:
 
     QPointer<QTemporaryFile> m_tempCarrierFile;
     QPointer<QTemporaryFile> m_tempPayloadFile;
-
     QPointer<QTemporaryFile> m_tempResultFile;
 
 };
