@@ -221,26 +221,26 @@ Window {
 
 
         ImageUI {
-            id: resultImageUI
+            id: modulatedImageUI
             Layout.fillWidth: true
             Layout.fillHeight: true
             title: "Result"
 
             Connections {
                 target: imageProc
-                function onResultImageUrlChanged() {
-                    resultImageUI.imageSource = imageProc.resultImageUrl;
+                function onModulatedImageUrlChanged() {
+                    modulatedImageUI.imageSource = imageProc.resultImageUrl;
                 }
             }
             Connections {
-                target: resultImageUI
+                target: modulatedImageUI
                 function onClickedOnImage() {
                     imageProc.openImage(ImageProcUtil.ModulatedImage);
                 }
             }
 
             Connections {
-                target: resultImageUI
+                target: modulatedImageUI
                 function onSaveFileRequested(destinationUrl: url) {
                     if (imageProc.saveImage(destinationUrl, ImageProcUtil.ModulatedImage)) {
                         console.log("saveFile() success");
@@ -276,7 +276,7 @@ Window {
         Binding {
             target: imageProc
             property: "resultImageUrl"
-            value: resultImageUI.imageSource
+            value: modulatedImageUI.imageSource
         }
 
         Binding {

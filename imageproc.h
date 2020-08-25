@@ -46,9 +46,9 @@ class ImageProc : public QObject
                MEMBER m_payloadImageUrl
                NOTIFY payloadImageUrlChanged)
 
-    Q_PROPERTY(QUrl resultImageUrl
-               MEMBER m_resultImageUrl
-               NOTIFY resultImageUrlChanged)
+    Q_PROPERTY(QUrl modulatedImageUrl
+               MEMBER m_modulatedImageUrl
+               NOTIFY modulatedImageUrlChanged)
 
     Q_PROPERTY(quint8 bitCount
                MEMBER m_bitCount
@@ -69,18 +69,18 @@ public:
 signals:
     void carrierImageUrlChanged();
     void payloadImageUrlChanged();
-    void resultImageUrlChanged();
+    void modulatedImageUrlChanged();
     void bitCountChanged();
 
 private:
-    QUrl m_carrierImageUrl;
-    QUrl m_payloadImageUrl;
-    QUrl m_resultImageUrl;
+    QUrl m_carrierImageUrl; // up to date with the GUI
+    QUrl m_payloadImageUrl; // ,,
+    QUrl m_modulatedImageUrl;  // ,,
     int m_bitCount;
 
     QPointer<QTemporaryFile> m_tempCarrierFile;
     QPointer<QTemporaryFile> m_tempPayloadFile;
-    QPointer<QTemporaryFile> m_tempResultFile;
+    QPointer<QTemporaryFile> m_tempModulatedImageFile;
 
 };
 
