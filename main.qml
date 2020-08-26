@@ -74,12 +74,7 @@ Window {
                 }
             }
 
-            Connections {
-                target: origImageUI
-                function onClickedOnImage() {
-                    imageProc.openImage(imageProc.carrierImageUrl);
-                }
-            }
+            onClickedOnImage: imageProc.openImage(imageProc.carrierImageUrl)
 
             onSaveFileRequested: {
                 if (imageProc.saveImage(imageProc.carrierImageUrl, destinationUrl) === ImageProcUtil.Success) {
@@ -115,13 +110,7 @@ Window {
                 }
             }
 
-            Connections {
-                target: payloadImageUI
-                function onClickedOnImage() {
-                    console.log(ImageProcUtil.PayloadImage);
-                    imageProc.openImage(imageProc.payloadImageUrl);
-                }
-            }
+            onClickedOnImage: imageProc.openImage(imageProc.payloadImageUrl)
 
             onSaveFileRequested: {
                 if (imageProc.saveImage(imageProc.payloadImageUrl, destinationUrl) === ImageProcUtil.Success) {
@@ -231,12 +220,7 @@ Window {
                 }
             }
 
-            Connections {
-                target: modulatedImageUI
-                function onClickedOnImage() {
-                    imageProc.openImage(imageProc.modulatedImageUrl);
-                }
-            }
+            onClickedOnImage: imageProc.openImage(imageProc.modulatedImageUrl)
 
             onSaveFileRequested: {
                 if (imageProc.saveImage(imageProc.modulatedImageUrl, destinationUrl) === ImageProcUtil.Success) {
