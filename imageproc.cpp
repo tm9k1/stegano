@@ -27,7 +27,7 @@ int ImageProc::hideImage()
 
     // check if inputs were valid
     if (m_bitCount < ImageProcUtil::minimumBitCount || m_bitCount > ImageProcUtil::maximumBitCount) {
-        return ImageProcUtil::ReturnCode::InvalidBitCount;
+        return ImageProcUtil::ReturnCode::InvalidParam;
     }
 
     const QImage* carrierImage = new QImage(
@@ -86,7 +86,7 @@ int ImageProc::retrieveImage()
         return ImageProcUtil::ReturnCode::FileLoadError;
     }
     if (m_bitCount < ImageProcUtil::minimumBitCount || m_bitCount > ImageProcUtil::maximumBitCount) {
-        return ImageProcUtil::ReturnCode::InvalidBitCount;
+        return ImageProcUtil::ReturnCode::InvalidParam;
     }
 
     const QImage* modulatedImage = new QImage(m_modulatedImageUrl.url(QUrl::PreferLocalFile));
@@ -169,7 +169,13 @@ void ImageProc::resetTempFile(QPointer<QTemporaryFile> &tempFile)
 
 bool ImageProc::openImage(const QUrl &url) const
 {
-    return QDesktopServices::openUrl(url);
+    bool result = QDesktopServices::openUrl(url);
+
+    if (result == true) {
+        return ImageProcUtil::ReturnCode::Success;
+    }
+
+    return ImageProcUtil::ReturnCode::FileIOError;
 }
 
 bool ImageProc::saveImage(const QUrl &sourceUrl, const QUrl &destinationUrl) const
@@ -180,5 +186,5 @@ bool ImageProc::saveImage(const QUrl &sourceUrl, const QUrl &destinationUrl) con
         return ImageProcUtil::ReturnCode::Success;
     }
 
-    return ImageProcUtil::ReturnCode::ImageProcessError;
+    return ImageProcUtil::ReturnCode::FileIOError;
 }

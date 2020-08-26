@@ -13,9 +13,10 @@ Q_NAMESPACE           // required for meta object creation
 enum ReturnCode{
     UnknownError=0,
     FileLoadError,
-    InvalidBitCount,
+    InvalidParam,
     ImageLoadError,
     ImageProcessError,
+    FileIOError,
     Success
 };
 Q_ENUM_NS(ReturnCode)
