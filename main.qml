@@ -123,10 +123,10 @@ Window {
                 text: (mainWindow.isLandscapeMode ? "\u21e6" : "\u21e7")
                 onClicked: {
                     var returnCode = imageProc.retrieveImage();
-                    if (returnCode === 0) {
+                    if (returnCode === ImageProcUtil.Success) {
                         console.log("retrieveImage returned successfully");
                     } else {
-                        console.log("retrieveImage had an error!", returnCode);
+                        console.log("retrieveImage had an error! Error Code: ", returnCode);
                     }
                 }
 
@@ -183,10 +183,10 @@ Window {
 
                 onClicked: {
                     var returnCode = imageProc.hideImage();
-                    if (returnCode === 0) {
+                    if (returnCode === ImageProcUtil.Success) {
                         console.log("hideImage returned successfully");
                     } else {
-                        console.log("hideImage had an error!", returnCode);
+                        console.log("hideImage had an error! Error Code: ", returnCode);
                     }
                 }
             }
