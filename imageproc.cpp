@@ -172,7 +172,7 @@ bool ImageProc::openImage(const QUrl &url) const
     return QDesktopServices::openUrl(url);
 }
 
-int ImageProc::saveImage(const QUrl &sourceUrl, const QUrl &destinationUrl) const
+bool ImageProc::saveImage(const QUrl &sourceUrl, const QUrl &destinationUrl) const
 {
     bool result = QFile::copy(sourceUrl.url(QUrl::PreferLocalFile), destinationUrl.url(QUrl::PreferLocalFile));
 

@@ -70,7 +70,7 @@ Window {
             onClickedOnImage: imageProc.openImage(imageProc.carrierImageUrl)
 
             onSaveFileRequested: {
-                if (imageProc.saveImage(imageProc.carrierImageUrl, destinationUrl) === ImageProcUtil.Success) {
+                if (imageProc.saveImage(imageProc.carrierImageUrl, destinationUrl)) {
                     console.log("saveImage() success");
                 } else {
                     console.log("saveImage() failed");
@@ -99,7 +99,7 @@ Window {
             onClickedOnImage: imageProc.openImage(imageProc.payloadImageUrl)
 
             onSaveFileRequested: {
-                if (imageProc.saveImage(imageProc.payloadImageUrl, destinationUrl) === ImageProcUtil.Success) {
+                if (imageProc.saveImage(imageProc.payloadImageUrl, destinationUrl)) {
                     console.log("saveImage() success");
                 } else {
                     console.log("saveImage() failed");
@@ -202,7 +202,7 @@ Window {
             onClickedOnImage: imageProc.openImage(imageProc.modulatedImageUrl)
 
             onSaveFileRequested: {
-                if (imageProc.saveImage(imageProc.modulatedImageUrl, destinationUrl) === ImageProcUtil.Success) {
+                if (imageProc.saveImage(imageProc.modulatedImageUrl, destinationUrl)) {
                     console.log("saveImage() success");
                 } else {
                     console.log("saveImage() failed");

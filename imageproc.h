@@ -11,12 +11,12 @@ namespace ImageProcUtil
 {
 Q_NAMESPACE           // required for meta object creation
 enum ReturnCode{
-    Success=0,
+    UnknownError=0,
     FileLoadError,
     InvalidBitCount,
     ImageLoadError,
     ImageProcessError,
-    UnknownError
+    Success
 };
 Q_ENUM_NS(ReturnCode)
 
@@ -54,7 +54,7 @@ public:
     Q_INVOKABLE int retrieveImage();
 
     Q_INVOKABLE bool openImage(const QUrl &url) const;
-    Q_INVOKABLE int saveImage(const QUrl &sourceUrl, const QUrl &destinationUrl) const;
+    Q_INVOKABLE bool saveImage(const QUrl &sourceUrl, const QUrl &destinationUrl) const;
 
     void resetTempFile(QPointer<QTemporaryFile> &tempFile);
 
