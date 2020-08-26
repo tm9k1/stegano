@@ -67,13 +67,6 @@ Window {
 
             title: "Original Image"
 
-            Connections {
-                target: imageProc
-                function onCarrierImageUrlChanged() {
-                    origImageUI.imageSource = imageProc.carrierImageUrl;
-                }
-            }
-
             onClickedOnImage: imageProc.openImage(imageProc.carrierImageUrl)
 
             onSaveFileRequested: {
@@ -102,13 +95,6 @@ Window {
 
             grayscaleMode: true
             title: "Payload Image"
-
-            Connections {
-                target: imageProc
-                function onPayloadImageUrlChanged() {
-                    payloadImageUI.imageSource = imageProc.payloadImageUrl;
-                }
-            }
 
             onClickedOnImage: imageProc.openImage(imageProc.payloadImageUrl)
 
@@ -213,13 +199,6 @@ Window {
 
             title: "Result"
 
-            Connections {
-                target: imageProc
-                function onModulatedImageUrlChanged() {
-                    modulatedImageUI.imageSource = imageProc.modulatedImageUrl;
-                }
-            }
-
             onClickedOnImage: imageProc.openImage(imageProc.modulatedImageUrl)
 
             onSaveFileRequested: {
@@ -238,7 +217,7 @@ Window {
             }
         }
 
-        /* Bindings for ImageProc members
+        /* updation for QML -> C++
          */
         Binding {
             target: imageProc
@@ -262,6 +241,29 @@ Window {
             target: imageProc
             property: "bitCount"
             value: (bitCountTextField.acceptableInput) ? parseInt(bitCountTextField.text) : -1
+        }
+
+        /* updation for C++ -> QML
+         */
+        Connections {
+            target: imageProc
+            function onModulatedImageUrlChanged() {
+                modulatedImageUI.imageSource = imageProc.modulatedImageUrl;
+            }
+        }
+
+        Connections {
+            target: imageProc
+            function onPayloadImageUrlChanged() {
+                payloadImageUI.imageSource = imageProc.payloadImageUrl;
+            }
+        }
+
+        Connections {
+            target: imageProc
+            function onCarrierImageUrlChanged() {
+                origImageUI.imageSource = imageProc.carrierImageUrl;
+            }
         }
     }
 }
