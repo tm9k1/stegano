@@ -10,13 +10,6 @@
 namespace ImageProcUtil
 {
 Q_NAMESPACE           // required for meta object creation
-enum ImageType
-{
-    CarrierImage=0,
-    PayloadImage,
-    ModulatedImage
-};
-
 enum ReturnCode{
     Success=0,
     FileLoadError,
@@ -25,13 +18,12 @@ enum ReturnCode{
     ImageProcessError,
     UnknownError
 };
+Q_ENUM_NS(ReturnCode)
 
 const quint8 minimumBitCount = 1;
 const quint8 maximumBitCount = 3;
 const QString imageFormat = QStringLiteral("png");
 
-Q_ENUM_NS(ImageType)  // register the enum in meta object data
-Q_ENUM_NS(ReturnCode)
 }
 
 class ImageProc : public QObject
@@ -62,7 +54,7 @@ public:
     Q_INVOKABLE int retrieveImage();
 
     Q_INVOKABLE bool openImage(const QUrl &url) const;
-    Q_INVOKABLE bool saveImage(const QUrl &destinationUrl, const int image) const;
+    Q_INVOKABLE int saveImage(const QUrl &sourceUrl, const QUrl &destinationUrl) const;
 
     void resetTempFile(QPointer<QTemporaryFile> &tempFile);
 

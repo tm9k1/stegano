@@ -172,35 +172,9 @@ bool ImageProc::openImage(const QUrl &url) const
     return QDesktopServices::openUrl(url);
 }
 
-bool ImageProc::saveImage(const QUrl &destinationUrl, const int imageType) const
+int ImageProc::saveImage(const QUrl &sourceUrl, const QUrl &destinationUrl) const
 {
-    //perhaps a simpler way would be to just copy the image from tempDir
-
-    QImage* image = new QImage();
-
-    switch (imageType) {
-    case ImageProcUtil::ImageType::CarrierImage :
-        image->load(m_carrierImageUrl.url(QUrl::PreferLocalFile));
-        break;
-    case ImageProcUtil::ImageType::PayloadImage:
-        image->load(m_payloadImageUrl.url(QUrl::PreferLocalFile));
-        break;
-    case ImageProcUtil::ImageType::ModulatedImage:
-        image->load(m_modulatedImageUrl.url(QUrl::PreferLocalFile));
-        break;
-    default:
-        qDebug() << "invalid input";
-        return ImageProcUtil::ReturnCode::FileLoadError;
-    }
-
-    if (image->isNull()) {
-        qDebug() << "image contents were null after loading the image. Returning.";
-        return ImageProcUtil::ReturnCode::ImageLoadError;
-    }
-
-    bool result = image->save(destinationUrl.url(QUrl::PreferLocalFile), ImageProcUtil::imageFormat.toStdString().c_str());
-
-    delete image;
+    bool result = QFile::copy(sourceUrl.url(QUrl::PreferLocalFile), destinationUrl.url(QUrl::PreferLocalFile));
 
     if (result == true) {
         return ImageProcUtil::ReturnCode::Success;

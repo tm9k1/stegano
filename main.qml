@@ -81,14 +81,11 @@ Window {
                 }
             }
 
-            Connections {
-                target: origImageUI
-                function onSaveFileRequested(destinationUrl: url) {
-                    if(imageProc.saveImage(destinationUrl, ImageProcUtil.CarrierImage)) {
-                        console.log("saveImage() success");
-                    } else {
-                        console.log("saveImage() failed");
-                    }
+            onSaveFileRequested: {
+                if (imageProc.saveImage(imageProc.carrierImageUrl, destinationUrl) === ImageProcUtil.Success) {
+                    console.log("saveImage() success");
+                } else {
+                    console.log("saveImage() failed");
                 }
             }
         }
@@ -126,14 +123,11 @@ Window {
                 }
             }
 
-            Connections {
-                target: payloadImageUI
-                function onSaveFileRequested(destinationUrl: url) {
-                    if (imageProc.saveImage(destinationUrl, ImageProcUtil.PayloadImage)) {
-                        console.log("saveFile() success");
-                    } else {
-                        console.log("saveFile() failed");
-                    }
+            onSaveFileRequested: {
+                if (imageProc.saveImage(imageProc.payloadImageUrl, destinationUrl) === ImageProcUtil.Success) {
+                    console.log("saveImage() success");
+                } else {
+                    console.log("saveImage() failed");
                 }
             }
         }
@@ -244,14 +238,11 @@ Window {
                 }
             }
 
-            Connections {
-                target: modulatedImageUI
-                function onSaveFileRequested(destinationUrl: url) {
-                    if (imageProc.saveImage(destinationUrl, ImageProcUtil.ModulatedImage)) {
-                        console.log("saveFile() success");
-                    } else {
-                        console.log("saveFile() failed");
-                    }
+            onSaveFileRequested: {
+                if (imageProc.saveImage(imageProc.modulatedImageUrl, destinationUrl) === ImageProcUtil.Success) {
+                    console.log("saveImage() success");
+                } else {
+                    console.log("saveImage() failed");
                 }
             }
         }
