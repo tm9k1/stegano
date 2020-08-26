@@ -116,10 +116,12 @@ Window {
             columns: mainWindow.isLandscapeMode ? 1 : 3
             rows: mainWindow.isLandscapeMode ? 3 : 1
 
-            Button {
+            CustomButton {
                 id: retrieveButton
-                opacity: 0.8
+                Layout.preferredWidth: bitCountTextField.width
 
+                horizontalPadding: 0
+                font.pixelSize: origImageUI.titleSize
                 text: (mainWindow.isLandscapeMode ? "\u21e6" : "\u21e7")
 
                 onClicked: {
@@ -135,7 +137,7 @@ Window {
             TextField {
                 id: bitCountTextField
 
-                Layout.preferredWidth: retrieveButton.width
+                Layout.preferredWidth: bitCountTextField.placeholderText.length * 5
                 horizontalAlignment: TextInput.AlignHCenter
 
                 background: Item {
@@ -173,10 +175,12 @@ Window {
                 ]
             }
 
-            Button {
+            CustomButton {
                 id: modulateButton
-                opacity: 0.8
+                Layout.preferredWidth: bitCountTextField.width
 
+                horizontalPadding: 0
+                font.pixelSize: origImageUI.titleSize
                 text: (mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9")
 
                 onClicked: {

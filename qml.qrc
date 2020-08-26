@@ -4,5 +4,6 @@
         <file>assets/images/placeholder.png</file>
         <file>assets/fonts/sf-pro-text-regular.otf</file>
         <file>assets/components/ImageUI.qml</file>
+        <file>assets/components/CustomButton.qml</file>
     </qresource>
 </RCC>

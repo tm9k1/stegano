@@ -4,6 +4,8 @@ import QtQuick.Dialogs 1.3
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 
+import "./"
+
 Item {
     id: container
     property alias title: headerLabel.text
@@ -15,15 +17,20 @@ Item {
 
     ColumnLayout {
         id: columnLayout
+        property int margin: 5
         anchors.fill: parent
 
         Rectangle {
             Layout.fillHeight: true
             Layout.fillWidth: true
+            border.color: "#000000"
+            border.width: 10
+            radius: 10
 
             Image {
                 id: placeholderImage
                 anchors.fill: parent
+                anchors.margins: columnLayout.margin
 
                 clip: true
                 source: "../images/placeholder"
@@ -33,7 +40,7 @@ Item {
 
             Image {
                 id: image
-                anchors.fill: parent
+                anchors.fill: placeholderImage
 
                 clip: true
                 source: ""
@@ -73,7 +80,7 @@ Item {
 
                             PropertyChanges {
                                 target: loadOverLayRectangle
-                                opacity: 0.7
+                                opacity: 0.6
                             }
                         }
                     ]
@@ -96,13 +103,12 @@ Item {
                     ]
                 }
 
-                RoundButton {
+                CustomButton {
                     id: loadImageButton
                     anchors.centerIn: parent
 
                     font.underline: true
-                    font.bold: true
-                    font.pixelSize: headerLabel.font.pixelSize
+                    font.pixelSize: headerLabel.font.pixelSize * 2
                     text: "\u21A5"
 
                     onClicked: loadImageDialog.open();
@@ -118,7 +124,7 @@ Item {
 
                 }
 
-                RoundButton {
+                CustomButton {
                     id: resetImageButton
                     width: loadImageButton.width / 2
                     height: loadImageButton.height / 2
@@ -142,6 +148,7 @@ Item {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
+                anchors.margins: columnLayout.margin
 
                 height: headerLabel.font.pixelSize * 2
                 color: loadOverLayRectangle.color
@@ -166,7 +173,8 @@ Item {
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
-                height: headerLabel.font.pixelSize * 3
+                anchors.margins: columnLayout.margin
+                height: headerLabel.font.pixelSize * 2.5
 
                 color: loadOverLayRectangle.color
                 opacity: 0.6
@@ -187,15 +195,14 @@ Item {
                 }
             }
 
-            RoundButton {
+            CustomButton {
                 id: saveButton
                 anchors.centerIn: saveAreaRectangle
-                width: implicitWidth * 1.5
 
                 enabled: false
 
                 font.family: sanFransicoPro.name
-                font.pixelSize: headerLabel.font.pixelSize / 2
+                font.pixelSize: headerLabel.font.pixelSize / 1.25
                 text: "Save Image"
 
                 onClicked: saveFileDialog.open()
