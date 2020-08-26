@@ -121,6 +121,7 @@ Window {
                 opacity: 0.8
 
                 text: (mainWindow.isLandscapeMode ? "\u21e6" : "\u21e7")
+
                 onClicked: {
                     var returnCode = imageProc.retrieveImage();
                     if (returnCode === ImageProcUtil.Success) {
@@ -129,7 +130,6 @@ Window {
                         console.log("retrieveImage had an error! Error Code: ", returnCode);
                     }
                 }
-
             }
 
             TextField {
@@ -175,10 +175,8 @@ Window {
 
             Button {
                 id: forwardLabel
-                opacity: 0.7
-                flat: true
+                opacity: 0.8
 
-                font.bold: true
                 text: (mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9")
 
                 onClicked: {
