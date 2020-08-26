@@ -17,6 +17,20 @@ I found this project idea on a freelancing website and decided to give it a shot
 
 for fun :D
 
+## Gallery
+
+![landscape01](https://i.imgur.com/8ICmKDX.png)
+![landscape02](https://i.imgur.com/jMbL8R0.png)
+![landscape03](https://i.imgur.com/6TiP3Mj.png)
+
+### but wait, there's more
+
+> Since the app uses QML GridLayout, you can run it on vertical monitors too!
+
+![portrait01](https://i.imgur.com/jsmcsPc.png)
+![portrait02](https://i.imgur.com/mn3rJIK.png)
+![portrait03](https://i.imgur.com/0AbIqJP.png)
+
 ## The How
 
 - Data from every pixel from the payload image is distributed in the RGB pixel of the carrier image.
