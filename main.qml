@@ -233,7 +233,7 @@ Window {
             Connections {
                 target: imageProc
                 function onModulatedImageUrlChanged() {
-                    modulatedImageUI.imageSource = imageProc.resultImageUrl;
+                    modulatedImageUI.imageSource = imageProc.modulatedImageUrl;
                 }
             }
 
@@ -279,7 +279,7 @@ Window {
 
         Binding {
             target: imageProc
-            property: "resultImageUrl"
+            property: "modulatedImageUrl"
             value: modulatedImageUI.imageSource
         }
 
