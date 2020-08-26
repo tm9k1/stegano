@@ -27,7 +27,7 @@ Window {
     maximumWidth: mainWindow.maximumHeight * mainWindow.aspectRatio
 
     visible: true
-    title: qsTr("Hello World")
+    title: qsTr("Qt Image Manipulation Sample - Piyush Aggarwal")
 
     Component.onCompleted: {
         setX(screen.width/2 - mainWindow.width/2)
