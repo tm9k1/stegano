@@ -117,7 +117,7 @@ Window {
             rows: mainWindow.isLandscapeMode ? 3 : 1
 
             Button {
-                id: backwardLabel
+                id: retrieveButton
                 opacity: 0.8
 
                 text: (mainWindow.isLandscapeMode ? "\u21e6" : "\u21e7")
@@ -135,7 +135,7 @@ Window {
             TextField {
                 id: bitCountTextField
 
-                Layout.preferredWidth: backwardLabel.width
+                Layout.preferredWidth: retrieveButton.width
                 horizontalAlignment: TextInput.AlignHCenter
 
                 background: Item {
@@ -174,7 +174,7 @@ Window {
             }
 
             Button {
-                id: forwardLabel
+                id: modulateButton
                 opacity: 0.8
 
                 text: (mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9")
