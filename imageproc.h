@@ -61,7 +61,7 @@ public:
     Q_INVOKABLE int hideImage();
     Q_INVOKABLE int retrieveImage();
 
-    Q_INVOKABLE bool openImage(const int image) const;
+    Q_INVOKABLE bool openImage(const QUrl &url) const;
     Q_INVOKABLE bool saveImage(const QUrl &destinationUrl, const int image) const;
 
     void resetTempFile(QPointer<QTemporaryFile> &tempFile);

@@ -77,7 +77,7 @@ Window {
             Connections {
                 target: origImageUI
                 function onClickedOnImage() {
-                    imageProc.openImage(ImageProcUtil.CarrierImage);
+                    imageProc.openImage(imageProc.carrierImageUrl);
                 }
             }
 
@@ -122,7 +122,7 @@ Window {
                 target: payloadImageUI
                 function onClickedOnImage() {
                     console.log(ImageProcUtil.PayloadImage);
-                    imageProc.openImage(ImageProcUtil.PayloadImage);
+                    imageProc.openImage(imageProc.payloadImageUrl);
                 }
             }
 
@@ -240,7 +240,7 @@ Window {
             Connections {
                 target: modulatedImageUI
                 function onClickedOnImage() {
-                    imageProc.openImage(ImageProcUtil.ModulatedImage);
+                    imageProc.openImage(imageProc.modulatedImageUrl);
                 }
             }
 

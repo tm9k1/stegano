@@ -18,19 +18,6 @@ ImageProc::~ImageProc()
     if (m_tempModulatedImageFile != nullptr) { delete m_tempModulatedImageFile; }
 }
 
-void ImageProc::resetTempFile(QPointer<QTemporaryFile> &tempFile)
-{
-    if (tempFile != nullptr) { delete tempFile; }
-
-    tempFile = new QTemporaryFile();
-    tempFile->setFileTemplate((QDir::tempPath()+QStringLiteral("/XXXXXXXXXX")+
-                               QStringLiteral(".")+ImageProcUtil::imageFormat));
-
-    // open and close the file once so that tempFile->fileName() is populated
-    tempFile->open();
-    tempFile->close();
-}
-
 int ImageProc::hideImage()
 {
     // check if file exists
@@ -92,7 +79,6 @@ int ImageProc::hideImage()
 
     return ImageProcUtil::ReturnCode::ImageProcessError;
 }
-
 
 int ImageProc::retrieveImage()
 {
@@ -168,28 +154,23 @@ int ImageProc::retrieveImage()
 
 }
 
-bool ImageProc::openImage(const int imageType) const
+void ImageProc::resetTempFile(QPointer<QTemporaryFile> &tempFile)
 {
-    QUrl urlToOpen;
+    if (tempFile != nullptr) { delete tempFile; }
 
-    switch(imageType) {
-    case ImageProcUtil::ImageType::CarrierImage :
-        urlToOpen = m_carrierImageUrl;
-        break;
-    case ImageProcUtil::ImageType::PayloadImage:
-        urlToOpen = m_payloadImageUrl;
-        break;
-    case ImageProcUtil::ImageType::ModulatedImage:
-        urlToOpen = m_modulatedImageUrl;
-        break;
-    default:
-        qDebug() << "invalid input";
-        return false;
-    }
+    tempFile = new QTemporaryFile();
+    tempFile->setFileTemplate((QDir::tempPath()+QStringLiteral("/XXXXXXXXXX")+
+                               QStringLiteral(".")+ImageProcUtil::imageFormat));
 
-    return QDesktopServices::openUrl(urlToOpen);
+    // open and close the file once so that tempFile->fileName() is populated
+    tempFile->open();
+    tempFile->close();
 }
 
+bool ImageProc::openImage(const QUrl &url) const
+{
+    return QDesktopServices::openUrl(url);
+}
 
 bool ImageProc::saveImage(const QUrl &destinationUrl, const int imageType) const
 {
