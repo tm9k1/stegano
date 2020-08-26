@@ -13,6 +13,8 @@ ImageProc::ImageProc(QObject *parent) : QObject(parent), m_tempModulatedImageFil
 
 ImageProc::~ImageProc()
 {
+    if (m_tempCarrierImageFile != nullptr) { delete m_tempCarrierImageFile; }
+    if (m_tempPayloadImageFile != nullptr) { delete m_tempPayloadImageFile; }
     if (m_tempModulatedImageFile != nullptr) { delete m_tempModulatedImageFile; }
 }
 
@@ -114,8 +116,8 @@ int ImageProc::retrieveImage()
 
     delete modulatedImage;
 
-    resetTempFile(m_tempCarrierFile);
-    QFileInfo tempCarrierFileInfo(*m_tempCarrierFile);
+    resetTempFile(m_tempCarrierImageFile);
+    QFileInfo tempCarrierFileInfo(*m_tempCarrierImageFile);
 
     bool carrierImageSaveSuccess = carrierImage->save(
                 tempCarrierFileInfo.absoluteFilePath(),
@@ -133,8 +135,8 @@ int ImageProc::retrieveImage()
         qDebug() << "Carrier file = " << tempCarrierFileUrl;
     }
 
-    resetTempFile(m_tempPayloadFile);
-    QFileInfo tempPayloadFileInfo(*m_tempPayloadFile);
+    resetTempFile(m_tempPayloadImageFile);
+    QFileInfo tempPayloadFileInfo(*m_tempPayloadImageFile);
 
     bool payloadImageSaveSuccess = payloadImage->save(
                 tempPayloadFileInfo.absoluteFilePath(),

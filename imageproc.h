@@ -78,8 +78,9 @@ private:
     QUrl m_modulatedImageUrl;  // ,,
     int m_bitCount;
 
-    QPointer<QTemporaryFile> m_tempCarrierFile;
-    QPointer<QTemporaryFile> m_tempPayloadFile;
+    // these should stay alive till the end of program/ end of this object
+    QPointer<QTemporaryFile> m_tempCarrierImageFile;
+    QPointer<QTemporaryFile> m_tempPayloadImageFile;
     QPointer<QTemporaryFile> m_tempModulatedImageFile;
 
 };
