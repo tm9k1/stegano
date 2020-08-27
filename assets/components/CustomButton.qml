@@ -69,7 +69,7 @@ Item {
         anchors.centerIn: parent
 
         color: "#eff0f1"
-        font.bold: true
+//        font.bold: true
         style: Text.Raised
         styleColor: "#4d4d4d"
 

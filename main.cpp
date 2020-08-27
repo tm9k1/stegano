@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QApplication>
+#include <QQuickWindow>
 
 #include "imageproc.h"
 
@@ -41,6 +42,8 @@ int main(int argc, char *argv[])
                 "ImageProcUtil",                          // name in QML (does not have to match C++ name)
                 "Error: only enums"                       // error in case someone tries to create a ImageProcUtil object
                 );
+
+    QQuickWindow::setTextRenderType(QQuickWindow::QtTextRendering);
 
     engine.load(url);
 

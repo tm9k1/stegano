@@ -132,7 +132,6 @@ Item {
                     anchors.left: loadImageButton.right
                     anchors.leftMargin: resetImageButton.font.pixelSize
 
-                    font.bold: true
                     font.pixelSize: Math.max(loadImageButton.font.pixelSize / 2 , 12)
                     text: "\u2205"
 
