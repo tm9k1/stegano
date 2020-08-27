@@ -160,7 +160,6 @@ Item {
                 anchors.centerIn: headerRectangle
 
                 font.underline: true
-                font.family: sanFransicoPro.name
                 font.pixelSize: 20
                 color: "#eff0f1"
                 style: Text.Raised
@@ -201,7 +200,6 @@ Item {
 
                 enabled: false
 
-                font.family: sanFransicoPro.name
                 font.pixelSize: headerLabel.font.pixelSize / 1.25
                 text: "Save Image"
 

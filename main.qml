@@ -44,8 +44,6 @@ Window {
     }";
     }
 
-    FontLoader { id: sanFransicoPro; source: "assets/fonts/sf-pro-text-regular.otf" }
-
     //    flags: Qt.FramelessWindowHint TODO: Make an OP border system
 
     GridLayout {
@@ -147,7 +145,6 @@ Window {
 
                 validator: IntValidator { bottom: 1 ; top: 3 }
 
-                font.bold: true
                 color: "#eff0f1"
                 placeholderText: "<b>Bits (1/2/3)</b>"
 
