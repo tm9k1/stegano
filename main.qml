@@ -23,9 +23,6 @@ Window {
     minimumHeight: (mainWindow.startHeight / 2) + (mainWindow.startHeight / 4) // 75%
     minimumWidth: mainWindow.minimumHeight * mainWindow.aspectRatio
 
-    maximumHeight: screen.height // 200%
-    maximumWidth: mainWindow.maximumHeight * mainWindow.aspectRatio
-
     visible: true
     title: qsTr("Qt Image Manipulation Sample - Piyush Aggarwal")
 
