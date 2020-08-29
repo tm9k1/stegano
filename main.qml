@@ -52,13 +52,13 @@ Window {
 
         Label {
             text: "Stegano: A Digital Image Manipulation App"
-            font.pixelSize: origImageUI.titleSize
+            font.pixelSize: carrierImageUI.titleSize
             color: "#eff0f1"
 
         }
         Label {
             text: "A pet project by Piyush Aggarwal"
-            font.pixelSize: origImageUI.titleSize / 1.4
+            font.pixelSize: carrierImageUI.titleSize / 1.4
             color: "#eff0f1"
 
         }
@@ -73,7 +73,7 @@ Window {
             rows: mainWindow.isLandscapeMode ? 1 : 5
 
             ImageUI {
-                id: origImageUI
+                id: carrierImageUI
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
@@ -95,7 +95,7 @@ Window {
                 Layout.alignment: Qt.AlignCenter
 
                 font.bold: true
-                font.pixelSize: origImageUI.titleSize
+                font.pixelSize: carrierImageUI.titleSize
                 color: "#eff0f1"
                 text: "+"
             }
@@ -133,7 +133,7 @@ Window {
                     Layout.preferredWidth: bitCountTextField.width
 
                     horizontalPadding: 0
-                    font.pixelSize: origImageUI.titleSize
+                    font.pixelSize: carrierImageUI.titleSize
                     text: (mainWindow.isLandscapeMode ? "\u21e6" : "\u21e7")
 
                     onClicked: {
@@ -191,7 +191,7 @@ Window {
                     Layout.preferredWidth: bitCountTextField.width
 
                     horizontalPadding: 0
-                    font.pixelSize: origImageUI.titleSize
+                    font.pixelSize: carrierImageUI.titleSize
                     text: (mainWindow.isLandscapeMode ? "\u21e8" : "\u21e9")
 
                     onClicked: {
@@ -235,7 +235,7 @@ Window {
             Binding {
                 target: imageProc
                 property: "carrierImageUrl"
-                value: origImageUI.imageSource
+                value: carrierImageUI.imageSource
             }
 
             Binding {
@@ -275,7 +275,7 @@ Window {
             Connections {
                 target: imageProc
                 function onCarrierImageUrlChanged() {
-                    origImageUI.imageSource = imageProc.carrierImageUrl;
+                    carrierImageUI.imageSource = imageProc.carrierImageUrl;
                 }
             }
         }
