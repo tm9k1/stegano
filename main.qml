@@ -210,7 +210,7 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                title: "Result"
+                title: "Modulated Image"
 
                 onClickedOnImage: imageProc.openImage(imageProc.modulatedImageUrl)
 
