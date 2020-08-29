@@ -4,9 +4,12 @@ import QtQuick.Controls 2.15
 Item {
     id: container
     signal clicked();
+    property alias backgroundOpacity: buttonRectangle.opacity
     property alias text: buttonLabel.text
     property alias font: buttonLabel.font
     property alias horizontalPadding: buttonRectangle.horizontalPadding
+    property alias verticalPadding: buttonRectangle.verticalPadding
+    property alias dontAnimate: buttonRectangle.dontAnimate
 
     implicitWidth: buttonRectangle.width
     implicitHeight: buttonRectangle.height
@@ -15,6 +18,7 @@ Item {
         id: buttonRectangle
         property int horizontalPadding: 10
         property int verticalPadding: 5
+        property bool dontAnimate: false
         anchors.fill: parent
 
         radius: 10
@@ -41,7 +45,7 @@ Item {
 
                 PropertyChanges {
                     target: buttonRectangle
-                    opacity: 0.3
+                    opacity: (dontAnimate) ? buttonRectangle.opacity : 0.3
                 }
             }
         ]

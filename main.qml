@@ -280,6 +280,32 @@ Window {
             }
         }
     }
+
+    CustomButton {
+        id: introCustomButton
+        anchors.centerIn: parent
+        dontAnimate: true
+        backgroundOpacity: 0.9
+        text:
+"
+This app has two operating modes:-
+1. Encoding mode
+The encoding mode takes a carrier image and payload image as inputs and generates a modulated image.
+    1. Provide a carrier image and a payload image.
+    2. Enter the number of bits to be used from each RGB component to store the payload.
+    3. Once that is done press the forward button and the modulated image should show up.
+
+2. Decoding mode
+The decoding mode takes an image as input and returns the sanitized carrier and the payload as separate images.
+    1. Provide the modulated image.
+    2. Enter the number of bits that were used for modulation.
+    3. Press the backward button and the two images should show up.
+
+Click on this tip to dismiss it!
+"
+
+        onClicked: introCustomButton.visible = false
+    }
 }
 
 
