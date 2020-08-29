@@ -24,7 +24,7 @@ Window {
     minimumWidth: mainWindow.minimumHeight * mainWindow.aspectRatio
 
     visible: true
-    title: qsTr("Qt Image Manipulation Sample - Piyush Aggarwal")
+    title: qsTr("Stegano")
 
     Component.onCompleted: {
         setX(screen.width/2 - mainWindow.width/2)
@@ -266,8 +266,3 @@ Window {
 
 
 
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:0.75}
-}
-##^##*/
