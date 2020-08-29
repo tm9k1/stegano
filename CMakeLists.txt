@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(Steganography LANGUAGES CXX)
+project(STEGANO LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
