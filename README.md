@@ -100,6 +100,10 @@ So basically,   [p0][p1]  |  [p2][p3][p4]  |  [p5][p6][p7]
 
 - extend the software to work on videos - hiding one video into another.
 
+## Contributors
+
+- [@insaanimanav](http://github.com/insaanimanav) (Manav Sethi) - [#1](https://github.com/taskmaster9001/stegano/pull/1)
+
 ## Concept Art
 
 ![concept_art.png](https://i.imgur.com/RLOfZ4L.jpg)
