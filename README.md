@@ -19,17 +19,21 @@ for fun :D
 
 ## Gallery
 
-![landscape01](https://i.imgur.com/8ICmKDX.png)
-![landscape02](https://i.imgur.com/jMbL8R0.png)
-![landscape03](https://i.imgur.com/6TiP3Mj.png)
+![landscape01](https://i.imgur.com/gI4tusd.png)
+![landscape02](https://i.imgur.com/2p6i18h.png)
+![landscape03](https://i.imgur.com/EL10cGJ.png)
+![landscape04](https://i.imgur.com/gCnQs8w.png)
+![landscape05](https://i.imgur.com/YBfl3yG.png)
 
 ### but wait, there's more
 
 > Since the app uses QML GridLayout, you can run it on vertical monitors too!
 
-![portrait01](https://i.imgur.com/jsmcsPc.png)
-![portrait02](https://i.imgur.com/mn3rJIK.png)
-![portrait03](https://i.imgur.com/0AbIqJP.png)
+![portrait01](https://i.imgur.com/nTEoOMl.png)
+![portrait02](https://i.imgur.com/X120DOO.png)
+![portrait03](https://i.imgur.com/E3VaoRT.png)
+![portrait04](https://i.imgur.com/cJgjqib.png)
+![portrait05](https://i.imgur.com/qpJa5zN.png)
 
 ## The How
 
