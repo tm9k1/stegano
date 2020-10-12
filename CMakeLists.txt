@@ -55,7 +55,7 @@ find_program(Q_MAKE_EXE qmake)
 find_program(CQT_EXE cqtdeployer)
 
 IF(NOT EXISTS ${CQT_EXE})
-    message("WARNING: the cqtdeployer not exits please install the cqtdeployer and run cmake again!")
+    message( FATAL_ERROR "WARNING: the cqtdeployer not exits please install the cqtdeployer and run cmake again!")
 endif(NOT EXISTS ${CQT_EXE})
 
 set(OUTPUT_EXECUTABLE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}stegano)
