@@ -107,6 +107,7 @@ So basically,   [p0][p1]  |  [p2][p3][p4]  |  [p5][p6][p7]
 ## Contributors
 
 - [@insaanimanav](http://github.com/insaanimanav) (Manav Sethi) - [#1](https://github.com/taskmaster9001/stegano/pull/1)
+- [@EndrII](https://github.com/EndrII) (Andrei Yankovich) - [#4](https://github.com/taskmaster9001/stegano/pull/4)
 
 ## Concept Art
 
