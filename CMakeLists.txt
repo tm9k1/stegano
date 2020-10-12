@@ -54,17 +54,23 @@ target_link_libraries(stegano
 find_program(Q_MAKE_EXE qmake)
 find_program(CQT_EXE cqtdeployer)
 
-IF(NOT EXISTS ${CQT_EXE})
-    message( FATAL_ERROR "WARNING: the cqtdeployer not exits please install the cqtdeployer and run cmake again!")
-endif(NOT EXISTS ${CQT_EXE})
+if(NOT EXISTS ${CQT_EXE})
+    message(FATAL_ERROR "WARNING: the cqtdeployer not exits please install the cqtdeployer and run cmake again!")
+endif()
 
 set(OUTPUT_EXECUTABLE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}stegano)
-if (WIN32)
-    set(OUTPUT_EXECUTABLE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}stegano.exe)
-endif (WIN32)
+set(OUTPUT_EXECUTABLE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}stegano)
 
-ADD_CUSTOM_TARGET(
+if(WIN32)
+  string(APPEND OUTPUT_EXECUTABLE ".exe")
+endif()
+
+add_custom_target(
     deploy
-    COMMAND cqtdeployer clear -bin ${OUTPUT_EXECUTABLE} -qmake ${Q_MAKE_EXE} -targetDir ${PROJECT_SOURCE_DIR}/release -libDir ${PROJECT_SOURCE_DIR} -qmlDir ${PROJECT_SOURCE_DIR} -recursiveDepth 3
-    COMMENT "cqtdeployer clear -bin ${OUTPUT_EXECUTABLE} -qmake ${Q_MAKE_EXE} -targetDir ${PROJECT_SOURCE_DIR}/release -libDir ${PROJECT_SOURCE_DIR} -qmlDir ${PROJECT_SOURCE_DIR} -recursiveDepth 3"
+    COMMAND cqtdeployer clear -bin ${OUTPUT_EXECUTABLE} -qmake ${Q_MAKE_EXE}
+            -targetDir ${PROJECT_SOURCE_DIR}/release -libDir ${PROJECT_SOURCE_DIR}
+            -qmlDir ${PROJECT_SOURCE_DIR} -recursiveDepth 3
+    COMMENT "cqtdeployer clear -bin ${OUTPUT_EXECUTABLE} -qmake ${Q_MAKE_EXE}
+            -targetDir ${PROJECT_SOURCE_DIR}/release -libDir ${PROJECT_SOURCE_DIR}
+            -qmlDir ${PROJECT_SOURCE_DIR} -recursiveDepth 3"
 )
