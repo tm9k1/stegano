@@ -49,16 +49,19 @@ target_link_libraries(stegano
   PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::Widgets)
 
 
-# DEPLOY TARGET
+# DEPLOY
 
-find_program(Q_MAKE_EXE qmake)
+find_program(QMAKE_EXE qmake)
 find_program(CQT_EXE cqtdeployer)
 
-if(NOT EXISTS ${CQT_EXE})
-    message(FATAL_ERROR "WARNING: the cqtdeployer not exits please install the cqtdeployer and run cmake again!")
+if(NOT EXISTS ${QMAKE_EXE})
+    message(WARNING "Could not find EXECUTABLE qmake in the system. Target DEPLOY will NOT work.")
 endif()
 
-set(OUTPUT_EXECUTABLE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}stegano)
+if(NOT EXISTS ${CQT_EXE})
+    message(WARNING "Could not find EXECUTABLE cqtdeployer in the system. Target DEPLOY will NOT work.\nInstall from here: https://github.com/QuasarApp/CQtDeployer/releases/")
+endif()
+
 set(OUTPUT_EXECUTABLE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}stegano)
 
 if(WIN32)
