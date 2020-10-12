@@ -70,10 +70,10 @@ endif()
 
 add_custom_target(
     deploy
-    COMMAND cqtdeployer clear -bin ${OUTPUT_EXECUTABLE} -qmake ${Q_MAKE_EXE}
+    COMMAND ${CQT_EXE} clear -bin ${OUTPUT_EXECUTABLE} -qmake ${QMAKE_EXE}
             -targetDir ${PROJECT_SOURCE_DIR}/release -libDir ${PROJECT_SOURCE_DIR}
             -qmlDir ${PROJECT_SOURCE_DIR} -recursiveDepth 3
-    COMMENT "cqtdeployer clear -bin ${OUTPUT_EXECUTABLE} -qmake ${Q_MAKE_EXE}
+    COMMENT "${CQT_EXE} -clear -bin ${OUTPUT_EXECUTABLE} -qmake ${QMAKE_EXE}
             -targetDir ${PROJECT_SOURCE_DIR}/release -libDir ${PROJECT_SOURCE_DIR}
             -qmlDir ${PROJECT_SOURCE_DIR} -recursiveDepth 3"
 )
