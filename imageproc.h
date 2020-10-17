@@ -48,8 +48,7 @@ class ImageProc : public QObject
                NOTIFY bitCountChanged)
 
 public:
-
-    explicit ImageProc(QObject *parent = nullptr);
+    static ImageProc* getInstance();
     ~ImageProc();
     Q_INVOKABLE int hideImage();
     Q_INVOKABLE int retrieveImage();
@@ -66,16 +65,17 @@ signals:
     void bitCountChanged();
 
 private:
+    explicit ImageProc(QObject *parent = nullptr);
+    static ImageProc* m_instance;
+    quint8 m_bitCount;
     QUrl m_carrierImageUrl; // up to date with the GUI
     QUrl m_payloadImageUrl; // ,,
-    QUrl m_modulatedImageUrl;  // ,,
-    int m_bitCount;
+    QUrl m_modulatedImageUrl;  // ,, int m_bitCount;
 
     // these should stay alive till the end of program/ end of this object
     QPointer<QTemporaryFile> m_tempCarrierImageFile;
     QPointer<QTemporaryFile> m_tempPayloadImageFile;
     QPointer<QTemporaryFile> m_tempModulatedImageFile;
-
 };
 
 #endif // IMAGEPROC_H

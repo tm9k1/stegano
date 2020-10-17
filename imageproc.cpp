@@ -7,8 +7,18 @@
 
 #include "steganographylogic.h"
 
+ImageProc* ImageProc::m_instance = nullptr;
+
 ImageProc::ImageProc(QObject *parent) : QObject(parent), m_tempModulatedImageFile(nullptr)
 {
+}
+
+ImageProc* ImageProc::getInstance()
+{
+    if (ImageProc::m_instance == nullptr) {
+        ImageProc::m_instance = new ImageProc();
+    }
+    return ImageProc::m_instance;
 }
 
 ImageProc::~ImageProc()
