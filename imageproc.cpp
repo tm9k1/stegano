@@ -67,12 +67,9 @@ int ImageProc::hideImage()
     delete modulatedImage;
 
     if (modulatedImageSaveSuccess) {
-        QUrl tempModulatedImageUrl = QUrl(tempModulatedImageFileInfo.absoluteFilePath());
-        tempModulatedImageUrl.setScheme("file");
+        QUrl tempModulatedImageUrl = QUrl::fromLocalFile(tempModulatedImageFileInfo.absoluteFilePath());
         m_modulatedImageUrl = tempModulatedImageUrl;
-
         emit modulatedImageUrlChanged();
-
         qDebug() << "modulatedImage is here:" << tempModulatedImageUrl;
         return ImageProcUtil::ReturnCode::Success;
     }
@@ -112,12 +109,9 @@ int ImageProc::retrieveImage()
     delete carrierImage;
 
     if (carrierImageSaveSuccess) {
-        QUrl tempCarrierFileUrl(tempCarrierFileInfo.absoluteFilePath());
-        tempCarrierFileUrl.setScheme("file");
+        QUrl tempCarrierFileUrl = QUrl::fromLocalFile(tempCarrierFileInfo.absoluteFilePath());
         m_carrierImageUrl = tempCarrierFileUrl;
-
         emit carrierImageUrlChanged();
-
         qDebug() << "Carrier file = " << tempCarrierFileUrl;
     }
 
@@ -131,12 +125,9 @@ int ImageProc::retrieveImage()
     delete payloadImage;
 
     if (payloadImageSaveSuccess) {
-        QUrl tempPayloadFileUrl(tempPayloadFileInfo.absoluteFilePath());
-        tempPayloadFileUrl.setScheme("file");
+        QUrl tempPayloadFileUrl = QUrl::fromLocalFile(tempPayloadFileInfo.absoluteFilePath());
         m_payloadImageUrl = tempPayloadFileUrl;
-
         emit payloadImageUrlChanged();
-
         qDebug() << "Payload file = " << tempPayloadFileUrl;
     }
 
