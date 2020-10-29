@@ -4,8 +4,6 @@ import QtQuick.Dialogs 1.3
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 
-import "./"
-
 Item {
     id: container
     property alias title: headerLabel.text
@@ -33,7 +31,7 @@ Item {
                 anchors.margins: columnLayout.margin
 
                 clip: true
-                source: "../images/placeholder"
+                source: "/placeholder.png"
                 fillMode: Image.PreserveAspectCrop
                 opacity: 1.0
             }
