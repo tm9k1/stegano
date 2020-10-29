@@ -24,56 +24,33 @@ SET(CMAKE_BUILD_TYPE Debug)
 #    endif()
 #endif()
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick Widgets REQUIRED)
+add_subdirectory(src)
 
-if(ANDROID)
-    add_library(stegano SHARED
-      main.cpp
-      imageproc.cpp
-      steganographylogic.cpp
-      qml.qrc
-    )
-else()
-    add_executable(stegano
-      main.cpp
-      imageproc.cpp
-      steganographylogic.cpp
-      qml.qrc
-    )
-endif()
+  # DEPLOY
 
-target_compile_definitions(stegano
-  PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(stegano
-  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::Widgets)
+  find_program(QMAKE_EXE qmake)
+  find_program(CQT_EXE cqtdeployer)
 
+  if(NOT EXISTS ${QMAKE_EXE})
+      message(WARNING "Could not find EXECUTABLE qmake in the system. Target DEPLOY will NOT work.")
+  endif()
 
-# DEPLOY
+  if(NOT EXISTS ${CQT_EXE})
+      message(WARNING "Could not find EXECUTABLE cqtdeployer in the system. Target DEPLOY will NOT work.\nInstall from here: https://github.com/QuasarApp/CQtDeployer/releases/")
+  endif()
 
-find_program(QMAKE_EXE qmake)
-find_program(CQT_EXE cqtdeployer)
+  set(OUTPUT_EXECUTABLE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}stegano)
 
-if(NOT EXISTS ${QMAKE_EXE})
-    message(WARNING "Could not find EXECUTABLE qmake in the system. Target DEPLOY will NOT work.")
-endif()
+  if(WIN32)
+    string(APPEND OUTPUT_EXECUTABLE ".exe")
+  endif()
 
-if(NOT EXISTS ${CQT_EXE})
-    message(WARNING "Could not find EXECUTABLE cqtdeployer in the system. Target DEPLOY will NOT work.\nInstall from here: https://github.com/QuasarApp/CQtDeployer/releases/")
-endif()
-
-set(OUTPUT_EXECUTABLE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}stegano)
-
-if(WIN32)
-  string(APPEND OUTPUT_EXECUTABLE ".exe")
-endif()
-
-add_custom_target(
-    deploy
-    COMMAND ${CQT_EXE} clear -bin ${OUTPUT_EXECUTABLE} -qmake ${QMAKE_EXE}
-            -targetDir ${PROJECT_SOURCE_DIR}/release -libDir ${PROJECT_SOURCE_DIR}
-            -qmlDir ${PROJECT_SOURCE_DIR} -recursiveDepth 3
-    COMMENT "${CQT_EXE} -clear -bin ${OUTPUT_EXECUTABLE} -qmake ${QMAKE_EXE}
-            -targetDir ${PROJECT_SOURCE_DIR}/release -libDir ${PROJECT_SOURCE_DIR}
-            -qmlDir ${PROJECT_SOURCE_DIR} -recursiveDepth 3"
-)
+  add_custom_target(
+      deploy
+      COMMAND ${CQT_EXE} clear -bin ${OUTPUT_EXECUTABLE} -qmake ${QMAKE_EXE}
+              -targetDir ${PROJECT_SOURCE_DIR}/release -libDir ${PROJECT_SOURCE_DIR}
+              -qmlDir ${PROJECT_SOURCE_DIR} -recursiveDepth 3
+      COMMENT "${CQT_EXE} -clear -bin ${OUTPUT_EXECUTABLE} -qmake ${QMAKE_EXE}
+              -targetDir ${PROJECT_SOURCE_DIR}/release -libDir ${PROJECT_SOURCE_DIR}
+              -qmlDir ${PROJECT_SOURCE_DIR} -recursiveDepth 3"
+  )

@@ -31,7 +31,7 @@ Item {
                 anchors.margins: columnLayout.margin
 
                 clip: true
-                source: "/placeholder.png"
+                source: "/placeholder"
                 fillMode: Image.PreserveAspectCrop
                 opacity: 1.0
             }

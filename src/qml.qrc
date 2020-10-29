@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="placeholder.png">assets/images/placeholder.png</file>
         <file>qml/components/CustomButton.qml</file>
         <file>qml/components/ImageUI.qml</file>
         <file alias="main.qml">qml/main.qml</file>
+        <file alias="placeholder">qml/assets/images/placeholder.png</file>
     </qresource>
 </RCC>
