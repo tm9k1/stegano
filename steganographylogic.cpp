@@ -6,15 +6,10 @@ SteganographyLogic::SteganographyLogic()
 
 }
 
-bool SteganographyLogic::hideImage(QImage const* carrierImage, QImage const* payloadImage, QImage* modulatedImage, const int m_bitCount)
+bool SteganographyLogic::hideImage(const QImage &carrierImage, const QImage &payloadImage, QImage &modulatedImage, const int m_bitCount)
 {
-    // mem check
-    if(carrierImage == nullptr || payloadImage == nullptr || modulatedImage == nullptr) {
-        qDebug() << "QImage objects were not provided. Returning control.";
-        return false;
-    }
     // data check
-    if(carrierImage->isNull() || payloadImage->isNull()) {
+    if(carrierImage.isNull() || payloadImage.isNull()) {
         qDebug() << "Carrier/Payload image was null. Returning control.";
         return false;
     }
@@ -28,7 +23,7 @@ bool SteganographyLogic::hideImage(QImage const* carrierImage, QImage const* pay
 
     /* resize payloadImage to fit in carrier
      */
-    const QImage* scaledPayloadImage = new QImage(payloadImage->scaled(carrierImage->width(), carrierImage->height(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    QImage scaledPayloadImage (payloadImage.scaled(carrierImage.width(), carrierImage.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     /* convert payload to grayscale
      * 8-bit depth images use a index values in place of pixels and the
@@ -37,24 +32,24 @@ bool SteganographyLogic::hideImage(QImage const* carrierImage, QImage const* pay
      * color table to the index itself so we get 0 - 255 values.
      * Each entry in the color table is 32-bit though.
      */
-    QImage* bnwPayloadImage = new QImage(scaledPayloadImage->size(), QImage::Format_Indexed8);
+    QImage bnwPayloadImage (scaledPayloadImage.size(), QImage::Format_Indexed8);
 
     // populate the color table
     for (int i = 0; i <= 255; i++) {
-        bnwPayloadImage->setColor(i,QColor(quint8(i), quint8(i), quint8(i)).rgba());
+        bnwPayloadImage.setColor(i,QColor(quint8(i), quint8(i), quint8(i)).rgba());
     }
     // populate the pixels
-    for(int i = 0; i < bnwPayloadImage->height(); i++) {
-        const uchar* scan = scaledPayloadImage->constScanLine(i);
+    for(int i = 0; i < bnwPayloadImage.height(); i++) {
+        const uchar* scan = scaledPayloadImage.constScanLine(i);
         /* I really don't think I should be doing scanLine in the next line.
              * please let me know if you know what needs to be done. :D
              */
-        uchar* bnwPayloadScan = bnwPayloadImage->scanLine(i);
-        for (int j = 0; j < bnwPayloadImage->width(); j++) {
+        uchar* bnwPayloadScan = bnwPayloadImage.scanLine(i);
+        for (int j = 0; j < bnwPayloadImage.width(); j++) {
             const QRgb* scaledPayloadPixel = reinterpret_cast<const QRgb*>(
-                        scan + j * (scaledPayloadImage->depth() / 8));
+                        scan + j * (scaledPayloadImage.depth() / 8));
             quint8* bnwPixel = reinterpret_cast<quint8*>(
-                        bnwPayloadScan + j * (bnwPayloadImage->depth() / 8));
+                        bnwPayloadScan + j * (bnwPayloadImage.depth() / 8));
 
             *bnwPixel = qGray(*scaledPayloadPixel);
             if( i == 0 && j == 0) {
@@ -71,17 +66,17 @@ bool SteganographyLogic::hideImage(QImage const* carrierImage, QImage const* pay
      * Remaining pixels are currently filled with 0, i.e. the
      * hidden image has black color filled for any remaining pixels
      */
-    for (int i = 0; i < modulatedImage->height(); i++) {
-        const uchar* carrierScan = carrierImage->constScanLine(i);
+    for (int i = 0; i < modulatedImage.height(); i++) {
+        const uchar* carrierScan = carrierImage.constScanLine(i);
 
-        const uchar* bnwPayloadImageScan = (i < bnwPayloadImage->height()) ?
-                    bnwPayloadImage->constScanLine(i) : nullptr;
+        const uchar* bnwPayloadImageScan = (i < bnwPayloadImage.height()) ?
+                    bnwPayloadImage.constScanLine(i) : nullptr;
 
-        uchar* modulatedImageScan = modulatedImage->scanLine(i);
+        uchar* modulatedImageScan = modulatedImage.scanLine(i);
 
-        for ( int j = 0; j < modulatedImage->width(); j++) {
+        for ( int j = 0; j < modulatedImage.width(); j++) {
             const QRgb* carrierPixel = reinterpret_cast<const QRgb*>(
-                        carrierScan + j * (carrierImage->depth() / 8));
+                        carrierScan + j * (carrierImage.depth() / 8));
             quint8 carrierGreen = qGreen(*carrierPixel);
             quint8 carrierRed = qRed(*carrierPixel);
             quint8 carrierBlue = qBlue(*carrierPixel);
@@ -103,7 +98,7 @@ bool SteganographyLogic::hideImage(QImage const* carrierImage, QImage const* pay
                 qDebug() << "init modulatedBlueComponent  = " << QString::number(modulatedBlueComponent, 2);
             }
 
-            if (j < bnwPayloadImage->width() && bnwPayloadImageScan != nullptr) {
+            if (j < bnwPayloadImage.width() && bnwPayloadImageScan != nullptr) {
                 const quint8* payloadImagePixel = reinterpret_cast<const quint8*>(
                             bnwPayloadImageScan + j);
 
@@ -135,28 +130,15 @@ bool SteganographyLogic::hideImage(QImage const* carrierImage, QImage const* pay
                 qDebug() << "modulatedBlueComponent  = " << QString::number(modulatedBlueComponent, 2);
             }
 
-            QRgb* modulatedImagePixel = reinterpret_cast<QRgb*>(
-                        modulatedImageScan + j * (modulatedImage->depth() / 8));
+            QRgb* modulatedImagePixel = reinterpret_cast<QRgb*>(modulatedImageScan + j * (modulatedImage.depth() / 8));
             *modulatedImagePixel = QColor(modulatedRedComponent, modulatedGreenComponent, modulatedBlueComponent).rgba();
         }
     }
-    delete bnwPayloadImage;
-    delete scaledPayloadImage;
     return true;
 }
 
-bool SteganographyLogic::retrieveImages(QImage* carrierImage, QImage* hiddenImage, const QImage* modulatedImage, const int m_bitCount)
+bool SteganographyLogic::retrieveImages(QImage &carrierImage, QImage &hiddenImage, const QImage &modulatedImage, const int m_bitCount)
 {
-    // mem check
-    if(carrierImage == nullptr || hiddenImage == nullptr || modulatedImage == nullptr) {
-        qDebug() << "QImage objects were not provided. Returning control.";
-        return false;
-    }
-    // data check
-    if(modulatedImage->isNull()) {
-        qDebug() << "Modulated image was null. Returning control.";
-        return false;
-    }
     // param check
     if(m_bitCount < 1 || m_bitCount > 3) {
         qDebug() << "invalid bitCount. Returning control.";
@@ -168,16 +150,16 @@ bool SteganographyLogic::retrieveImages(QImage* carrierImage, QImage* hiddenImag
     /* populate color table for hiddenImage
      */
     for (int i = 0; i <= 255; i++) {
-        hiddenImage->setColor(i,QColor(quint8(i), quint8(i), quint8(i)).rgba());
+        hiddenImage.setColor(i,QColor(quint8(i), quint8(i), quint8(i)).rgba());
     }
 
-    for (int i = 0; i < modulatedImage->height(); i++) {
-        const uchar* modulatedImageScan = modulatedImage->constScanLine(i);
-        uchar* hiddenImageScan = hiddenImage->scanLine(i);
-        uchar* carrierImageScan = carrierImage->scanLine(i);
+    for (int i = 0; i < modulatedImage.height(); i++) {
+        const uchar* modulatedImageScan = modulatedImage.constScanLine(i);
+        uchar* hiddenImageScan = hiddenImage.scanLine(i);
+        uchar* carrierImageScan = carrierImage.scanLine(i);
 
-        for (int j = 0; j<modulatedImage->width(); j++) {
-            const QRgb* modulatedImageRgbPixel = reinterpret_cast<const QRgb*>(modulatedImageScan + j * (modulatedImage->depth() / 8));
+        for (int j = 0; j<modulatedImage.width(); j++) {
+            const QRgb* modulatedImageRgbPixel = reinterpret_cast<const QRgb*>(modulatedImageScan + j * (modulatedImage.depth() / 8));
 
             const quint8 modulatedImageGreen = qGreen(*modulatedImageRgbPixel);
             const quint8 modulatedImageRed = qRed(*modulatedImageRgbPixel);
@@ -209,7 +191,7 @@ bool SteganographyLogic::retrieveImages(QImage* carrierImage, QImage* hiddenImag
             redComponentMask = redComponentMask << (6 - m_bitCount);
             blueComponentMask = blueComponentMask << (3 - m_bitCount);
 
-            quint8* hiddenImagePixel = reinterpret_cast<quint8*>(hiddenImageScan + j * (hiddenImage->depth() / 8));
+            quint8* hiddenImagePixel = reinterpret_cast<quint8*>(hiddenImageScan + j * (hiddenImage.depth() / 8));
             *hiddenImagePixel = greenComponentMask | redComponentMask | blueComponentMask; // 11|111|111
 
             if( i == 0 && j == 0) {
@@ -227,7 +209,7 @@ bool SteganographyLogic::retrieveImages(QImage* carrierImage, QImage* hiddenImag
             blueComponentMask = modulatedImageBlue &
                     ((0xff << m_bitCount));
 
-            QRgb* carrierImagePixel = reinterpret_cast<QRgb*>(carrierImageScan + j * (carrierImage->depth() / 8));
+            QRgb* carrierImagePixel = reinterpret_cast<QRgb*>(carrierImageScan + j * (carrierImage.depth() / 8));
             *carrierImagePixel = QColor(redComponentMask, greenComponentMask, blueComponentMask).rgba();
 
             if( i == 0 && j == 0) {

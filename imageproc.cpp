@@ -40,41 +40,24 @@ int ImageProc::hideImage()
         return ImageProcUtil::ReturnCode::InvalidParam;
     }
 
-    const QImage* carrierImage = new QImage(
-                m_carrierImageUrl.url(QUrl::PreferLocalFile));
-    if (carrierImage == nullptr || carrierImage->isNull()) {
+    QImage carrierImage     (m_carrierImageUrl.url(QUrl::PreferLocalFile));
+    QImage payloadImage     (m_payloadImageUrl.url(QUrl::PreferLocalFile));
+    QImage modulatedImage   (carrierImage.size(), QImage::Format_RGB32);
+
+    if (carrierImage.isNull() || payloadImage.isNull() || modulatedImage.isNull()) {
         return ImageProcUtil::ReturnCode::ImageLoadError;
     }
 
-    const QImage* payloadImage = new QImage(
-                m_payloadImageUrl.url(QUrl::PreferLocalFile));
-    if (payloadImage  == nullptr || payloadImage->isNull()) {
-        return ImageProcUtil::ReturnCode::ImageLoadError;
-    }
-
-    QImage* modulatedImage = new QImage(
-                carrierImage->size(), QImage::Format_RGB32);
-    if (modulatedImage == nullptr || modulatedImage->isNull()) {
-        return ImageProcUtil::ReturnCode::ImageLoadError;
-    }
-
-    if (SteganographyLogic::hideImage(
-                carrierImage, payloadImage, modulatedImage,m_bitCount) != true) {
+    if (SteganographyLogic::hideImage(carrierImage, payloadImage, modulatedImage,m_bitCount) != true) {
         return ImageProcUtil::ReturnCode::ImageProcessError;
     }
-
-    delete carrierImage;
-    delete payloadImage;
 
     resetTempFile(m_tempModulatedImageFile);
 
     QFileInfo tempModulatedImageFileInfo(*m_tempModulatedImageFile);
 
-    bool modulatedImageSaveSuccess = modulatedImage->save(
-                tempModulatedImageFileInfo.absoluteFilePath(),
-                ImageProcUtil::imageFormat.toStdString().c_str());
-
-    delete modulatedImage;
+    bool modulatedImageSaveSuccess = modulatedImage.save(tempModulatedImageFileInfo.absoluteFilePath(),
+                                                        ImageProcUtil::imageFormat.toStdString().c_str());
 
     if (modulatedImageSaveSuccess) {
         QUrl tempModulatedImageUrl = QUrl::fromLocalFile(tempModulatedImageFileInfo.absoluteFilePath());
@@ -96,27 +79,24 @@ int ImageProc::retrieveImage()
         return ImageProcUtil::ReturnCode::InvalidParam;
     }
 
-    const QImage* modulatedImage = new QImage(m_modulatedImageUrl.url(QUrl::PreferLocalFile));
-    if (modulatedImage->isNull()) { return ImageProcUtil::ReturnCode::ImageLoadError; }
-    QImage* carrierImage = new QImage(modulatedImage->size(), QImage::Format_RGB32);
-    if (carrierImage->isNull()) { return ImageProcUtil::ReturnCode::ImageLoadError; }
-    QImage* payloadImage = new QImage(modulatedImage->size(), QImage::Format_Indexed8);
-    if (payloadImage->isNull()) { return ImageProcUtil::ReturnCode::ImageLoadError; }
+    QImage modulatedImage   (m_modulatedImageUrl.url(QUrl::PreferLocalFile));
+    QImage carrierImage     (modulatedImage.size(), QImage::Format_RGB32);
+    QImage payloadImage     (modulatedImage.size(), QImage::Format_Indexed8);
+
+    if (modulatedImage.isNull() || carrierImage.isNull() || payloadImage.isNull()) {
+        return ImageProcUtil::ReturnCode::ImageLoadError;
+    }
 
     if (SteganographyLogic::retrieveImages(carrierImage, payloadImage, modulatedImage, m_bitCount)  != true) {
         return ImageProcUtil::ReturnCode::ImageProcessError;
     }
 
-    delete modulatedImage;
-
     resetTempFile(m_tempCarrierImageFile);
     QFileInfo tempCarrierFileInfo(*m_tempCarrierImageFile);
 
-    bool carrierImageSaveSuccess = carrierImage->save(
+    bool carrierImageSaveSuccess = carrierImage.save(
                 tempCarrierFileInfo.absoluteFilePath(),
                 ImageProcUtil::imageFormat.toStdString().c_str());
-
-    delete carrierImage;
 
     if (carrierImageSaveSuccess) {
         QUrl tempCarrierFileUrl = QUrl::fromLocalFile(tempCarrierFileInfo.absoluteFilePath());
@@ -128,11 +108,9 @@ int ImageProc::retrieveImage()
     resetTempFile(m_tempPayloadImageFile);
     QFileInfo tempPayloadFileInfo(*m_tempPayloadImageFile);
 
-    bool payloadImageSaveSuccess = payloadImage->save(
+    bool payloadImageSaveSuccess = payloadImage.save(
                 tempPayloadFileInfo.absoluteFilePath(),
                 ImageProcUtil::imageFormat.toStdString().c_str());
-
-    delete payloadImage;
 
     if (payloadImageSaveSuccess) {
         QUrl tempPayloadFileUrl = QUrl::fromLocalFile(tempPayloadFileInfo.absoluteFilePath());
@@ -163,7 +141,7 @@ void ImageProc::resetTempFile(QPointer<QTemporaryFile> &tempFile)
     tempFile->setFileTemplate((QDir::tempPath()+QStringLiteral("/XXXXXXXXXX")+
                                QStringLiteral(".")+ImageProcUtil::imageFormat));
 
-    // open and close the file once so that tempFile->fileName() is populated
+    // open and close the file once so that tempFile.fileName() is populated
     tempFile->open();
     tempFile->close();
 }
