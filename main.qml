@@ -31,18 +31,7 @@ Window {
         setY(screen.height/2 - mainWindow.height/2)
     }
 
-    color: "#31363b"
-
-    ShaderEffect {
-        height: mainWindow.height
-        width: mainWindow.width
-
-        fragmentShader: "
-    varying highp vec2 qt_TexCoord0;
-    void main() {
-        gl_FragColor = vec4(0, qt_TexCoord0.x, qt_TexCoord0.y, 1.0);
-    }";
-    }
+    color: "#737c85"
 
     //    flags: Qt.FramelessWindowHint TODO: Make an OP border system
     ColumnLayout {
