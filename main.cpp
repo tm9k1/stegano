@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
 
     /* create custom QObjects before engine so engine can destroy correctly
      */
-    ImageProc* i = ImageProc::getInstance();
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QQmlApplicationEngine engine;
@@ -33,7 +32,7 @@ int main(int argc, char *argv[])
 
     /* add custom QObjects to the QML as property before loading the QML
      */
-    engine.rootContext()->setContextProperty("imageProc", i);
+    engine.rootContext()->setContextProperty("imageProc", ImageProc::getInstance());
 
     qmlRegisterUncreatableMetaObject(
                 ImageProcUtil::staticMetaObject,          // static meta object
