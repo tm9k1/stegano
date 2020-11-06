@@ -5,6 +5,7 @@
 #include <QQuickWindow>
 
 #include "imageproc.h"
+#include "util.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,6 +19,15 @@ int main(int argc, char *argv[])
      */
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
+
+    qmlRegisterUncreatableMetaObject(
+                Util::staticMetaObject,         // static meta object
+                "Stegano.Util",                 // import statement (can be any string)
+                1, 0,                           // major and minor version of the import
+                "ReturnCode",                   // namespace name in QML (does not have to match C++ name)
+                "Error: only enums"             // error in case someone tries to create a Util object
+                );
+
     QQmlApplicationEngine engine;
 
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -34,13 +44,6 @@ int main(int argc, char *argv[])
      */
     engine.rootContext()->setContextProperty("imageProc", ImageProc::getInstance());
 
-    qmlRegisterUncreatableMetaObject(
-                ImageProcUtil::staticMetaObject,          // static meta object
-                "ImageProc.ImageProcUtil",                // import statement (can be any string)
-                1, 0,                                     // major and minor version of the import
-                "ImageProcUtil",                          // name in QML (does not have to match C++ name)
-                "Error: only enums"                       // error in case someone tries to create a ImageProcUtil object
-                );
 
     QQuickWindow::setTextRenderType(QQuickWindow::QtTextRendering);
 

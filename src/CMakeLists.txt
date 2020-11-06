@@ -6,6 +6,7 @@ if(ANDROID)
       main.cpp
       imageproc.cpp
       steganographylogic.cpp
+      util.h
       qml.qrc
     )
 else()
@@ -13,6 +14,7 @@ else()
       main.cpp
       imageproc.cpp
       steganographylogic.cpp
+      util.h
       qml.qrc
     )
 endif()

@@ -5,7 +5,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 
 import "qrc:/qml/components/"
-import ImageProc.ImageProcUtil 1.0
+import Stegano.Util 1.0
 
 Window {
     id: mainWindow
@@ -127,7 +127,7 @@ Window {
 
                     onClicked: {
                         var returnCode = imageProc.retrieveImage();
-                        if (returnCode === ImageProcUtil.Success) {
+                        if (returnCode === ReturnCode.Success) {
                             console.log("retrieveImage returned successfully");
                         } else {
                             console.log("retrieveImage had an error! Error Code: ", returnCode);
@@ -185,7 +185,7 @@ Window {
 
                     onClicked: {
                         var returnCode = imageProc.hideImage();
-                        if (returnCode === ImageProcUtil.Success) {
+                        if (returnCode === ReturnCode.Success) {
                             console.log("hideImage returned successfully");
                         } else {
                             console.log("hideImage had an error! Error Code: ", returnCode);
