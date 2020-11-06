@@ -5,10 +5,13 @@
 #include <QObject>
 #include <QString>
 
+#include "util_export.h"
+
 namespace Util
 {
+UTIL_EXPORT
+Q_NAMESPACE             // required for meta object creation
 
-Q_NAMESPACE           // required for meta object creation
 enum ReturnCode
 {
     UnknownError = 0,

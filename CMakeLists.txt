@@ -23,6 +23,7 @@ SET(CMAKE_BUILD_TYPE Debug)
 #            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libssl.so)
 #    endif()
 #endif()
+include(GenerateExportHeader)
 
 add_subdirectory(src)
 

@@ -6,7 +6,6 @@ if(ANDROID)
       main.cpp
       imageproc.cpp
       steganographylogic.cpp
-      util.h
       qml.qrc
     )
 else()
@@ -14,12 +13,21 @@ else()
       main.cpp
       imageproc.cpp
       steganographylogic.cpp
-      util.h
       qml.qrc
     )
 endif()
 
+add_library(util util.h)
+target_link_libraries(util Qt${QT_VERSION_MAJOR}::Core)
+generate_export_header(util)
+
+# Library for utility stuff from Stegano
+add_library(Stegano::Util ALIAS util)
+
 target_compile_definitions(stegano
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+
 target_link_libraries(stegano
-  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::Widgets)
+  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::Widgets
+  Stegano::Util
+  )
