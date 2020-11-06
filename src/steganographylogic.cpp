@@ -1,4 +1,5 @@
 #include "steganographylogic.h"
+
 #include <QDebug>
 
 SteganographyLogic::SteganographyLogic()

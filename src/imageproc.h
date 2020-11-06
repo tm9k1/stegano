@@ -1,31 +1,10 @@
 #ifndef IMAGEPROC_H
 #define IMAGEPROC_H
 
-#include <QObject>
 #include <QUrl>
 #include <QTemporaryFile>
 #include <QPointer>
 #include <QUrl>
-
-namespace ImageProcUtil
-{
-Q_NAMESPACE           // required for meta object creation
-enum ReturnCode{
-    UnknownError=0,
-    FileLoadError,
-    InvalidParam,
-    ImageLoadError,
-    ImageProcessError,
-    FileIOError,
-    Success
-};
-Q_ENUM_NS(ReturnCode)
-
-const quint8 minimumBitCount = 1;
-const quint8 maximumBitCount = 3;
-const QString imageFormat = QStringLiteral("png");
-
-}
 
 class ImageProc : public QObject
 {
