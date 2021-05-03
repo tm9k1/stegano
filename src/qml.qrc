@@ -4,5 +4,6 @@
         <file>qml/components/ImageUI.qml</file>
         <file alias="main.qml">qml/main.qml</file>
         <file alias="placeholder">qml/assets/images/placeholder.png</file>
+        <file alias="icon">qml/assets/images/icon.png</file>
     </qresource>
 </RCC>

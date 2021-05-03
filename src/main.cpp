@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QApplication app(argc, argv);
+    app.setWindowIcon(QIcon("://icon"));
+
     app.setOrganizationName("Piyush");
     app.setOrganizationDomain("Aggarwal");
 
