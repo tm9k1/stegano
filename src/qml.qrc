@@ -5,5 +5,7 @@
         <file alias="main.qml">qml/main.qml</file>
         <file alias="placeholder">qml/assets/images/placeholder.png</file>
         <file alias="icon">qml/assets/images/icon.png</file>
+        <file>qml/components/effect.frag</file>
+        <file>qml/components/effect.frag.qsb</file>
     </qresource>
 </RCC>

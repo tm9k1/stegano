@@ -1,7 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Layouts 1.15
-import QtQuick.Controls 1.4
+import QtQuick.Controls
 import QtQuick.Controls 2.15
 
 import "qrc:/qml/components/"
@@ -70,7 +70,7 @@ Window {
 
                 onClickedOnImage: imageProc.openImage(imageProc.carrierImageUrl)
 
-                onSaveFileRequested: {
+                onSaveFileRequested: (destinationUrl) => {
                     if (imageProc.saveImage(imageProc.carrierImageUrl, destinationUrl)) {
                         console.log("saveImage() success");
                     } else {
@@ -99,7 +99,7 @@ Window {
 
                 onClickedOnImage: imageProc.openImage(imageProc.payloadImageUrl)
 
-                onSaveFileRequested: {
+                onSaveFileRequested: (destinationUrl) => {
                     if (imageProc.saveImage(imageProc.payloadImageUrl, destinationUrl)) {
                         console.log("saveImage() success");
                     } else {
@@ -141,14 +141,6 @@ Window {
                     Layout.preferredWidth: bitCountTextField.placeholderText.length * 5
                     horizontalAlignment: TextInput.AlignHCenter
 
-                    background: Item {
-                        Rectangle {
-                            id: bitCountBackgroundRectangle
-                            anchors.fill: parent
-                            color:  "#88000000"
-                        }
-                    }
-
                     validator: IntValidator { bottom: 1 ; top: 3 }
 
                     color: "#eff0f1"
@@ -160,16 +152,16 @@ Window {
 
                     onTextEdited: {
                         if (bitCountTextField.acceptableInput) {
-                            bitCountTextField.state = "acceptable"
+                            bitCountTextField.state = "valid"
                         } else {
                             bitCountTextField.state = ""
+                            bitCountTextField.text = ""
                         }
                     }
 
                     states: [
                         State {
-                            name: "acceptable"
-                            PropertyChanges { target: bitCountBackgroundRectangle; color: "#8800cc00" }
+                            name: "valid"
                             PropertyChanges { target: bitCountTextField; ToolTip.visible: false }
                         }
                     ]
@@ -203,7 +195,7 @@ Window {
 
                 onClickedOnImage: imageProc.openImage(imageProc.modulatedImageUrl)
 
-                onSaveFileRequested: {
+                onSaveFileRequested: (destinationUrl) => {
                     if (imageProc.saveImage(imageProc.modulatedImageUrl, destinationUrl)) {
                         console.log("saveImage() success");
                     } else {
@@ -212,7 +204,7 @@ Window {
                 }
             }
 
-            Keys.onPressed: {
+            Keys.onPressed: (event) => {
                 if (event.key === Qt.Key_Escape) {
                     mainWindow.close();
                     event.accepted = true;

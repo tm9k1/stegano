@@ -1,15 +1,16 @@
+import QtCore
+
 import QtQuick 2.0
 import QtQuick.Layouts 1.15
-import QtQuick.Dialogs 1.3
+import QtQuick.Dialogs
 import QtQuick.Controls 2.15
-import QtGraphicalEffects 1.15
 
 Item {
     id: container
     property alias title: headerLabel.text
     property alias imageSource: image.source
     property alias titleSize: headerLabel.font.pixelSize
-    property alias grayscaleMode: colorizeImage.visible
+    property alias grayscaleMode: imageShader.visible
     signal clickedOnImage()
     signal saveFileRequested(url destinationUrl)
 
@@ -43,15 +44,24 @@ Item {
                 clip: true
                 source: ""
                 fillMode: Image.PreserveAspectCrop
-                opacity: 0.0
+                opacity: 0
+            }
 
-                Colorize {
-                    id: colorizeImage
-                    anchors.fill: image
+            ShaderEffect {
+                id: imageShader
+                anchors.fill: image
 
-                    source: image
-                    saturation: 0
-                    visible: false
+                fragmentShader: "effect.frag.qsb"
+                visible: false
+
+                // The source is the item rendered to a texture
+                property Item source: ShaderEffectSource {
+
+                    // Pass item dimensions as uniforms
+                    property real itemWidth: image.width
+                    property real itemHeight: image.height
+
+                    sourceItem: image
                 }
             }
 
@@ -114,10 +124,10 @@ Item {
                     FileDialog {
                         id: loadImageDialog
                         title: "Open an image"
-                        folder: shortcuts.desktop
+                        currentFolder: StandardPaths.standardLocations(StandardPaths.DesktopLocation)[0]
                         nameFilters: [ "Image files (*.jpg *.png *.bmp)", "All files (*)" ]
 
-                        onAccepted: image.source = loadImageDialog.fileUrl
+                        onAccepted: image.source = loadImageDialog.selectedFile
                     }
 
                 }
@@ -205,11 +215,11 @@ Item {
                 FileDialog {
                     id: saveFileDialog
                     title: "Save the tmage"
-                    folder: shortcuts.desktop
+                    currentFolder: StandardPaths.standardLocations(StandardPaths.DesktopLocation)[0]
                     nameFilters: [ "Image files (*.jpg *.png *.bmp)", "All files (*)" ]
-                    selectExisting: false
+                    fileMode: FileDialog.SaveFile
 
-                    onAccepted: container.saveFileRequested(saveFileDialog.fileUrl)
+                    onAccepted: container.saveFileRequested(saveFileDialog.selectedFile)
                 }
             }
         }
